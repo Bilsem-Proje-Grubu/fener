@@ -5,21 +5,16 @@ import { renderOnboarding } from './views/onboarding.js';
 import { renderToday } from './views/today.js';
 import { renderTekrar } from './views/tekrar.js';
 import { renderHafta } from './views/hafta.js';
+import { renderRehber } from './views/rehber.js';
+import { renderAyarlar } from './views/ayarlar.js';
 
 const ROUTES = [
   { path: 'bugun', label: 'Bugün', render: renderToday },
   { path: 'tekrar', label: 'Tekrar', render: renderTekrar },
   { path: 'hafta', label: 'Hafta', render: renderHafta },
-  { path: 'rehber', label: 'Rehber', render: stub('Bilimsel çalışmak', 'Rehber bölümleri burada olacak.') },
-  { path: 'ayarlar', label: 'Ayarlar', render: stub('Ayarlar', 'Ad, süreler, yedek ve sıfırlama burada olacak.') },
+  { path: 'rehber', label: 'Rehber', render: renderRehber },
+  { path: 'ayarlar', label: 'Ayarlar', render: renderAyarlar },
 ];
-
-function stub(title, hint) {
-  return async (root) => {
-    root.innerHTML = `<div class="card"><h2>${title}</h2><p class="hint">${hint}</p></div>`;
-    return { destroy() {} };
-  };
-}
 
 const main = $('#main');
 let destroyCurrent = null;
@@ -51,12 +46,12 @@ async function route() {
   }
 
   document.body.classList.remove('onboarding');
-  const path = location.hash.replace(/^#\//, '') || 'bugun';
+  const [path, query] = (location.hash.replace(/^#\//, '') || 'bugun').split('?');
   const r = ROUTES.find(x => x.path === path) || ROUTES[0];
   setActive(r.path);
   main.innerHTML = '';
   main.focus();
-  const result = await r.render(main);
+  const result = await r.render(main, new URLSearchParams(query || ''));
   destroyCurrent = result && result.destroy;
 }
 

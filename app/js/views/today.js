@@ -183,6 +183,7 @@ export async function renderToday(root) {
             <button type="button" class="btn-primary" data-action="end-day">Bugünlük yeter</button>
             <button type="button" class="btn-ghost" data-action="night-anyway">Yine de 20 dakika</button>
           </div>
+          <a class="btn-ghost" href="#/rehber?s=10" style="margin-top:6px;display:inline-block">Neden uyku önemli?</a>
         </div>`;
     }
 

@@ -207,6 +207,35 @@ body.onboarding .rail, body.onboarding .tabs { display: none; }
 .task-item.done .task-check { background: var(--good); border-color: var(--good); }
 .task-sub { font-size: .78rem; color: var(--ink-soft); }
 
+.guide-card { cursor: pointer; }
+.guide-head { display: flex; align-items: center; gap: 10px; }
+.guide-num { font-family: var(--font-display); color: var(--ink-soft); font-size: .95rem; flex: 0 0 auto; }
+.guide-title { flex: 1; font-weight: 600; }
+.guide-read { color: var(--good); flex: 0 0 auto; }
+.guide-dots { display: flex; gap: 4px; margin: 8px 0; }
+.guide-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--line); }
+.guide-dot.filled { background: var(--cobalt); }
+.guide-body { margin-top: 12px; }
+.guide-body p { margin: 0 0 .7em; }
+.guide-foryou { font-style: italic; }
+
+.diagram { width: 100%; height: auto; margin: 12px 0; }
+.diagram-axis { stroke: var(--line); stroke-width: 1; }
+.diagram-curve { fill: none; stroke: var(--ink-soft); stroke-width: 2; stroke-dasharray: 4 4; }
+.diagram-curve-strong { fill: none; stroke: var(--cobalt); stroke-width: 2.5; }
+.diagram-label { font-family: var(--font-body); font-size: 10px; fill: var(--ink-soft); }
+.diagram-bar-a { fill: var(--cobalt); }
+.diagram-bar-b { fill: var(--line); }
+.diagram-bar-label { font-family: var(--font-display); font-size: 15px; fill: var(--ink); font-weight: 600; }
+
+.wall { display: flex; flex-direction: column; gap: 3px; overflow-x: auto; padding-bottom: 4px; }
+.wall-row { display: flex; gap: 3px; align-items: center; }
+.wall-week { font-size: .68rem; color: var(--ink-soft); width: 64px; flex: 0 0 64px; }
+.wall-cell { width: 14px; height: 14px; border-radius: 3px; background: var(--grid); flex: 0 0 auto; }
+.wall-cell.filled { background: var(--yellow); }
+
+.danger-card { border-color: var(--warn); }
+
 .onboard {
   max-width: 420px; margin: 0 auto; padding-top: 8vh; display: flex; flex-direction: column; gap: 20px;
 }

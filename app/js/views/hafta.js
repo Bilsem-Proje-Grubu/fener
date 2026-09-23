@@ -98,6 +98,7 @@ export async function renderHafta(root) {
             <h2>Bu haftanın planı</h2>
             <p class="empty">Henüz plan yok.</p>
             <button type="button" class="btn-primary" data-action="start-plan">Plana başla</button>
+            <a class="btn-ghost" href="#/rehber?s=8" style="margin-top:6px;display:inline-block">Bu neden işe yarıyor?</a>
           </div>`;
       }
       const p = bucket.plan;
