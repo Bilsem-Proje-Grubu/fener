@@ -21,16 +21,23 @@ Bitmiş olanlar:
 - `app/js/util.js` — tarih anahtarı (günün sınırı sabah 04:00), hafta hesabı (Pazartesi başlar), Türkçe büyük/küçük harf, güvenli HTML şablonu, ders listesi.
 - `app/js/spaced.js` — tekrar aralığı hesabı (1 → 7 → 30 → 90 gün; "kısmen" aynı aralık, "hatırlamadım" başa döner).
 - `app/js/timer.js` — sayaç mantığı (bitiş saati kaydedilir, kalan süre saatten hesaplanır; yenilemede bozulmaz), zil sesi, ekranı açık tutma.
+- `app/js/store.js` — veri katmanı (localStorage, şema numarası, yedek al/yükle).
+- `app/css/app.css` — tasarım sistemi (kareli defter zemini, açık/karanlık tema, kobalt/fosforlu sarı vurgular).
+- `app/js/views/onboarding.js` — ilk açılış (ad, odak süresi, ana cihaz).
+- `app/js/views/today.js` — Bugün ekranı: 7 günlük hedef çizgisi, yaklaşan sınav kartı, tam ekran odak sayacı (+5 dakika, bitir, üçlü ölçek, dağılma nedeni, otomatik mola), 3 iş listesi (dördüncü iş teklifi), "bugün ne öğrendin" + isteğe bağlı soru, gece önerisi, uzun aradan dönüş bandı.
+- `app/js/app.js` — yönlendirme (hash tabanlı), menü (telefonda alt sekme, bilgisayarda sol menü), "yeni sürüm hazır" bildirimi.
+- `app/index.html`, `app/sw.js` — yeniden yazıldı: sayfa açılışı önce internetten, yazı tipleri tamamen içeriden (Google bağımlılığı kaldırıldı).
+- `app/_headers` — Cloudflare Pages önbellek ve güvenlik başlıkları.
+
+Bilgisayarda ve telefon genişliğinde (390px) uçtan uca denendi: ilk açılış → Bugün → iş ekleme → sayaç başlatma → tam ekran odak → bitirme → üçlü ölçek → otomatik mola. Konsol hatası yok.
 
 Henüz yazılmamış, sıradaki işler (FENER-PLAN.md bölüm 10'daki yapım sırası):
-1. `app/js/store.js` — veri katmanı (localStorage, şema numarası, yedek al/yükle, haftalık özet metni).
-2. `app/css/app.css` — tasarım sistemi (kareli defter zemini, açık/karanlık tema).
+1. Tekrar sekmesi: not ekleme, soru şablonları, sırası gelenler kartı (`js/spaced.js` hazır).
+2. Hafta sekmesi: sınav/teslim listesi, "Bu haftanın planı" sihirbazı (dilek–sonuç–engel–plan), haftayı değerlendir, özet metni.
 3. `app/js/guide-content.js` — rehberin 13 bölümü ve 2 çizim.
-4. `app/js/views/` — ilk açılış, Bugün, tam ekran sayaç, Tekrar, Hafta, plan sihirbazı, Rehber, Ayarlar.
-5. `app/js/app.js` — yönlendirme, menü, "yeni sürüm hazır" bildirimi.
-6. `app/index.html`, `app/sw.js`, `app/manifest.webmanifest` — mevcut iskeletler **yeniden yazılacak** (sw.js şu an her şeyi önbellekten veriyor; sayfa açılışı önce internetten olmalı).
-7. `app/_headers` — Cloudflare Pages önbellek ve güvenlik başlıkları.
-8. `tests/` — `node --test` ile tarih, sayaç, tekrar aralığı, yedek doğrulama testleri.
+4. Ayarlar sekmesi: ilerleme duvarı, yedek al/yükle arayüzü, sıfırlama.
+5. `manifest.webmanifest` gözden geçirme, ikon/iPhone kurulum kartı denemesi.
+6. `tests/` — `node --test` ile tarih, sayaç, tekrar aralığı, yedek doğrulama testleri.
 
 ## Yerelde çalıştırma
 
