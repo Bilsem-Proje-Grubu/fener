@@ -307,10 +307,16 @@ export async function renderToday(root) {
 
   on(root, 'change', '#focusTask', (e, t) => { selectedTaskText = t.value; });
 
+  function selectedSubject() {
+    const task = dayBucket().tasks.find(t => t.text === selectedTaskText);
+    return task ? task.subject : null;
+  }
+
   on(root, 'click', '[data-action="start"]', async () => {
     primeAudio();
+    const subject = selectedSubject();
     await store.update(d => {
-      d.timer = startFocus(Date.now(), d.settings.focusMinutes, { taskText: selectedTaskText || '' });
+      d.timer = startFocus(Date.now(), d.settings.focusMinutes, { taskText: selectedTaskText || '', subject });
     });
     await keepAwake(true);
     paint();
@@ -318,7 +324,8 @@ export async function renderToday(root) {
 
   on(root, 'click', '[data-action="night-anyway"]', async () => {
     primeAudio();
-    await store.update(d => { d.timer = startFocus(Date.now(), 20, { taskText: selectedTaskText || '' }); });
+    const subject = selectedSubject();
+    await store.update(d => { d.timer = startFocus(Date.now(), 20, { taskText: selectedTaskText || '', subject }); });
     await keepAwake(true);
     paint();
   });
@@ -352,7 +359,7 @@ export async function renderToday(root) {
     await keepAwake(false);
     let count = 0;
     await store.update(d => {
-      d.sessions.push({ id: uid(), dayKey: today, minutes, quality, distraction, taskText: t.taskText || null, endedAt });
+      d.sessions.push({ id: uid(), dayKey: today, minutes, quality, distraction, taskText: t.taskText || null, subject: t.subject || null, endedAt });
       count = d.sessions.filter(s => s.dayKey === today).length;
       d.timer = count % 4 === 0
         ? startBreak(endedAt, 15, count)

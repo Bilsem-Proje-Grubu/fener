@@ -4,11 +4,12 @@ import * as store from './store.js';
 import { renderOnboarding } from './views/onboarding.js';
 import { renderToday } from './views/today.js';
 import { renderTekrar } from './views/tekrar.js';
+import { renderHafta } from './views/hafta.js';
 
 const ROUTES = [
   { path: 'bugun', label: 'Bugün', render: renderToday },
   { path: 'tekrar', label: 'Tekrar', render: renderTekrar },
-  { path: 'hafta', label: 'Hafta', render: stub('Hafta', 'Haftalık plan ve değerlendirme burada olacak.') },
+  { path: 'hafta', label: 'Hafta', render: renderHafta },
   { path: 'rehber', label: 'Rehber', render: stub('Bilimsel çalışmak', 'Rehber bölümleri burada olacak.') },
   { path: 'ayarlar', label: 'Ayarlar', render: stub('Ayarlar', 'Ad, süreler, yedek ve sıfırlama burada olacak.') },
 ];

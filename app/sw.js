@@ -4,7 +4,7 @@ const ASSETS = [
   './', './index.html', './manifest.webmanifest',
   './css/app.css?v=0.1.0', './js/app.js?v=0.1.0',
   './js/version.js', './js/util.js', './js/store.js', './js/timer.js', './js/spaced.js',
-  './js/views/onboarding.js', './js/views/today.js', './js/views/tekrar.js',
+  './js/views/onboarding.js', './js/views/today.js', './js/views/tekrar.js', './js/views/hafta.js',
   './fonts/fonts.css',
   './fonts/figtree-normal-latin.woff2', './fonts/figtree-normal-latin-ext.woff2',
   './fonts/figtree-italic-latin.woff2', './fonts/figtree-italic-latin-ext.woff2',

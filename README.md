@@ -26,18 +26,18 @@ Bitmiş olanlar:
 - `app/js/views/onboarding.js` — ilk açılış (ad, odak süresi, ana cihaz).
 - `app/js/views/today.js` — Bugün ekranı: 7 günlük hedef çizgisi, yaklaşan sınav kartı, tam ekran odak sayacı (+5 dakika, bitir, üçlü ölçek, dağılma nedeni, otomatik mola), 3 iş listesi (dördüncü iş teklifi), "bugün ne öğrendin" + isteğe bağlı soru, gece önerisi, uzun aradan dönüş bandı.
 - `app/js/views/tekrar.js` — Tekrar ekranı: bugün sırası gelen soru kartı (cevabı göster, hatırladım/kısmen/hatırlamadım), ilk tekrarda unutma eğrisi kartı, yeni not ekleme (ders + öğrendiğin cümle + isteğe bağlı soru), derse göre gruplanmış not listesi.
+- `app/js/views/hafta.js` — Hafta ekranı: tarih aralığı ve okul saatleri, yaklaşan sınav/teslim listesi, "Bu haftanın planı" sihirbazı (dilek–sonuç–engel–plan, "ne böldü" cevaplarından engel önerisi, sınavlardan hedef önerisi), "Haftayı değerlendir" (oturum/dakika/tekrar özeti, üç soru, kontrol hissi, hafta sonu öne çıkar), "haftalık özeti paylaş" (panoya kopyala), geçmiş haftalar listesi.
 - `app/js/app.js` — yönlendirme (hash tabanlı), menü (telefonda alt sekme, bilgisayarda sol menü), "yeni sürüm hazır" bildirimi.
 - `app/index.html`, `app/sw.js` — yeniden yazıldı: sayfa açılışı önce internetten, yazı tipleri tamamen içeriden (Google bağımlılığı kaldırıldı).
 - `app/_headers` — Cloudflare Pages önbellek ve güvenlik başlıkları.
 
-Bilgisayarda ve telefon genişliğinde (390px) uçtan uca denendi: ilk açılış → Bugün → iş ekleme → sayaç başlatma → tam ekran odak → bitirme → üçlü ölçek → otomatik mola; Tekrar → yeni not/soru ekleme → sırası gelen kart → cevabı göster → hatırladım → aralık ilerlemesi. Konsol hatası yok.
+Bilgisayarda ve telefon genişliğinde (390px) uçtan uca denendi: ilk açılış → Bugün → iş ekleme → sayaç başlatma → tam ekran odak → bitirme → üçlü ölçek → otomatik mola; Tekrar → yeni not/soru ekleme → sırası gelen kart → cevabı göster → hatırladım → aralık ilerlemesi; Hafta → sınav ekleme → plan sihirbazı (dilek→sonuç→engel→plan→hedefler, sınav önerisiyle) → kaydet → haftayı değerlendir → kaydet → özeti panoya kopyala. Konsol hatası yok.
 
 Henüz yazılmamış, sıradaki işler (FENER-PLAN.md bölüm 10'daki yapım sırası):
-1. Hafta sekmesi: sınav/teslim listesi, "Bu haftanın planı" sihirbazı (dilek–sonuç–engel–plan), haftayı değerlendir, özet metni.
-2. `app/js/guide-content.js` — rehberin 13 bölümü ve 2 çizim.
-3. Ayarlar sekmesi: ilerleme duvarı, yedek al/yükle arayüzü, sıfırlama.
-4. `manifest.webmanifest` gözden geçirme, ikon/iPhone kurulum kartı denemesi.
-5. `tests/` — `node --test` ile tarih, sayaç, tekrar aralığı, yedek doğrulama testleri.
+1. `app/js/guide-content.js` — rehberin 13 bölümü ve 2 çizim, ekranlardaki "?" kartları.
+2. Ayarlar sekmesi: ilerleme duvarı, yedek al/yükle arayüzü, sıfırlama.
+3. `manifest.webmanifest` gözden geçirme, ikon/iPhone kurulum kartı denemesi.
+4. `tests/` — `node --test` ile tarih, sayaç, tekrar aralığı, yedek doğrulama testleri.
 
 ## Yerelde çalıştırma
 
