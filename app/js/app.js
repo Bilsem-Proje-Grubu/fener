@@ -3,10 +3,11 @@ import { $, $$ } from './util.js';
 import * as store from './store.js';
 import { renderOnboarding } from './views/onboarding.js';
 import { renderToday } from './views/today.js';
+import { renderTekrar } from './views/tekrar.js';
 
 const ROUTES = [
   { path: 'bugun', label: 'Bugün', render: renderToday },
-  { path: 'tekrar', label: 'Tekrar', render: stub('Tekrar', 'Aralıklı tekrar kartları burada olacak.') },
+  { path: 'tekrar', label: 'Tekrar', render: renderTekrar },
   { path: 'hafta', label: 'Hafta', render: stub('Hafta', 'Haftalık plan ve değerlendirme burada olacak.') },
   { path: 'rehber', label: 'Rehber', render: stub('Bilimsel çalışmak', 'Rehber bölümleri burada olacak.') },
   { path: 'ayarlar', label: 'Ayarlar', render: stub('Ayarlar', 'Ad, süreler, yedek ve sıfırlama burada olacak.') },

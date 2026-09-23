@@ -25,19 +25,19 @@ Bitmiş olanlar:
 - `app/css/app.css` — tasarım sistemi (kareli defter zemini, açık/karanlık tema, kobalt/fosforlu sarı vurgular).
 - `app/js/views/onboarding.js` — ilk açılış (ad, odak süresi, ana cihaz).
 - `app/js/views/today.js` — Bugün ekranı: 7 günlük hedef çizgisi, yaklaşan sınav kartı, tam ekran odak sayacı (+5 dakika, bitir, üçlü ölçek, dağılma nedeni, otomatik mola), 3 iş listesi (dördüncü iş teklifi), "bugün ne öğrendin" + isteğe bağlı soru, gece önerisi, uzun aradan dönüş bandı.
+- `app/js/views/tekrar.js` — Tekrar ekranı: bugün sırası gelen soru kartı (cevabı göster, hatırladım/kısmen/hatırlamadım), ilk tekrarda unutma eğrisi kartı, yeni not ekleme (ders + öğrendiğin cümle + isteğe bağlı soru), derse göre gruplanmış not listesi.
 - `app/js/app.js` — yönlendirme (hash tabanlı), menü (telefonda alt sekme, bilgisayarda sol menü), "yeni sürüm hazır" bildirimi.
 - `app/index.html`, `app/sw.js` — yeniden yazıldı: sayfa açılışı önce internetten, yazı tipleri tamamen içeriden (Google bağımlılığı kaldırıldı).
 - `app/_headers` — Cloudflare Pages önbellek ve güvenlik başlıkları.
 
-Bilgisayarda ve telefon genişliğinde (390px) uçtan uca denendi: ilk açılış → Bugün → iş ekleme → sayaç başlatma → tam ekran odak → bitirme → üçlü ölçek → otomatik mola. Konsol hatası yok.
+Bilgisayarda ve telefon genişliğinde (390px) uçtan uca denendi: ilk açılış → Bugün → iş ekleme → sayaç başlatma → tam ekran odak → bitirme → üçlü ölçek → otomatik mola; Tekrar → yeni not/soru ekleme → sırası gelen kart → cevabı göster → hatırladım → aralık ilerlemesi. Konsol hatası yok.
 
 Henüz yazılmamış, sıradaki işler (FENER-PLAN.md bölüm 10'daki yapım sırası):
-1. Tekrar sekmesi: not ekleme, soru şablonları, sırası gelenler kartı (`js/spaced.js` hazır).
-2. Hafta sekmesi: sınav/teslim listesi, "Bu haftanın planı" sihirbazı (dilek–sonuç–engel–plan), haftayı değerlendir, özet metni.
-3. `app/js/guide-content.js` — rehberin 13 bölümü ve 2 çizim.
-4. Ayarlar sekmesi: ilerleme duvarı, yedek al/yükle arayüzü, sıfırlama.
-5. `manifest.webmanifest` gözden geçirme, ikon/iPhone kurulum kartı denemesi.
-6. `tests/` — `node --test` ile tarih, sayaç, tekrar aralığı, yedek doğrulama testleri.
+1. Hafta sekmesi: sınav/teslim listesi, "Bu haftanın planı" sihirbazı (dilek–sonuç–engel–plan), haftayı değerlendir, özet metni.
+2. `app/js/guide-content.js` — rehberin 13 bölümü ve 2 çizim.
+3. Ayarlar sekmesi: ilerleme duvarı, yedek al/yükle arayüzü, sıfırlama.
+4. `manifest.webmanifest` gözden geçirme, ikon/iPhone kurulum kartı denemesi.
+5. `tests/` — `node --test` ile tarih, sayaç, tekrar aralığı, yedek doğrulama testleri.
 
 ## Yerelde çalıştırma
 

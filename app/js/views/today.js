@@ -239,6 +239,23 @@ export async function renderToday(root) {
       </div>`;
   }
 
+  function questionFormHtml() {
+    return `
+      <form data-form="question" class="stack" style="margin-top:10px">
+        <select name="template">
+          <option value="">Şablon seç (isteğe bağlı)</option>
+          ${QUESTION_TEMPLATES.map(q => `<option value="${esc(q)}">${esc(q)}</option>`).join('')}
+        </select>
+        <input type="text" name="q" placeholder="Soru" required>
+        <input type="text" name="a" placeholder="Kısa cevap" required>
+        <select name="subject">${SUBJECTS.map(s => `<option>${esc(s)}</option>`).join('')}</select>
+        <div class="row">
+          <button type="submit" class="btn-primary">Soruyu kaydet</button>
+          <button type="button" class="btn-ghost" data-action="cancel-question">Vazgeç</button>
+        </div>
+      </form>`;
+  }
+
   function learnedHtml() {
     const bucket = dayBucket();
     return `
@@ -248,23 +265,10 @@ export async function renderToday(root) {
           <textarea name="learned" placeholder="Tek cümle yeter.">${esc(bucket.learned || '')}</textarea>
           <div class="row">
             <button type="submit" class="btn-primary">Kaydet</button>
-            ${!showQuestionForm ? `<button type="button" class="btn-ghost" data-action="add-question">+ Soru ekle</button>` : ''}
+            <button type="button" class="btn-ghost" id="addQuestionBtn" data-action="add-question" ${showQuestionForm ? 'style="display:none"' : ''}>+ Soru ekle</button>
           </div>
         </form>
-        ${showQuestionForm ? `
-          <form data-form="question" class="stack" style="margin-top:10px">
-            <select name="template">
-              <option value="">Şablon seç (isteğe bağlı)</option>
-              ${QUESTION_TEMPLATES.map(q => `<option value="${esc(q)}">${esc(q)}</option>`).join('')}
-            </select>
-            <input type="text" name="q" placeholder="Soru" required>
-            <input type="text" name="a" placeholder="Kısa cevap" required>
-            <select name="subject">${SUBJECTS.map(s => `<option>${esc(s)}</option>`).join('')}</select>
-            <div class="row">
-              <button type="submit" class="btn-primary">Soruyu kaydet</button>
-              <button type="button" class="btn-ghost" data-action="cancel-question">Vazgeç</button>
-            </div>
-          </form>` : ''}
+        <div id="questionFormArea">${showQuestionForm ? questionFormHtml() : ''}</div>
       </div>`;
   }
 
@@ -422,8 +426,17 @@ export async function renderToday(root) {
     paint();
   });
 
-  on(root, 'click', '[data-action="add-question"]', () => { showQuestionForm = true; paint(); });
-  on(root, 'click', '[data-action="cancel-question"]', () => { showQuestionForm = false; paint(); });
+  on(root, 'click', '[data-action="add-question"]', (e, t) => {
+    showQuestionForm = true;
+    $('#questionFormArea', root).innerHTML = questionFormHtml();
+    t.style.display = 'none';
+  });
+  on(root, 'click', '[data-action="cancel-question"]', () => {
+    showQuestionForm = false;
+    $('#questionFormArea', root).innerHTML = '';
+    const btn = $('#addQuestionBtn', root);
+    if (btn) btn.style.display = '';
+  });
 
   on(root, 'change', 'select[name="template"]', (e, t) => {
     const input = $('input[name="q"]', t.closest('form'));
