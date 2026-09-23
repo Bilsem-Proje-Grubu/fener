@@ -1,7 +1,7 @@
 # Fener — Fen Lisesi 9. Sınıf Öğrencisi için Çalışma Arkadaşı
 
 **Araştırma bulguları, beş gözle değerlendirme ve ilk sürüm planı**
-Tarih: 17 Eylül 2026 · Durum: Onay bekliyor
+Tarih: 17 Eylül 2026, 23 Eylül 2026'da Cloudflare'a göre güncellendi · Durum: Onaylandı, yapım başlıyor
 
 ## İçindekiler
 
@@ -11,7 +11,7 @@ Tarih: 17 Eylül 2026 · Durum: Onay bekliyor
 4. Örnek bir hafta
 5. Alınan kararlar
 6. Beş gözle değerlendirme: zayıf noktalar ve alınan kararlar
-7. Teknik yaklaşım ve Vercel
+7. Teknik yaklaşım ve Cloudflare
 8. Ekranlar (ilk sürüm)
 9. Tasarım dili
 10. Dosya yapısı ve yapım sırası
@@ -128,7 +128,7 @@ Hafta içi toplam: günde 3 oturum (yaklaşık 75–120 dakika), haftada 15 otur
 | Veli erişimi? | Şimdilik yok. |
 | Tekrar soruları kimden? | Öğrenci kendisi yazar; şablonlarla kolaylaştırılır. Hazır soru havuzu sonra. |
 | Araştırma bulguları? | Öğrencinin zevkle okuyacağı bir "Bilimsel çalışmak" rehberi olarak uygulamanın içinde. |
-| Nerede yayınlanacak? | Vercel. |
+| Nerede yayınlanacak? | Cloudflare Pages. (İlk tercih Vercel'di; Vercel özel depoları yalnızca ücretli planda kabul ettiği için 23 Eylül 2026'da Cloudflare'a geçildi.) |
 
 ## 6. Beş gözle değerlendirme: zayıf noktalar ve alınan kararlar
 
@@ -149,8 +149,8 @@ Değerlendiriciler: kişisel eğitim koçu, 14–15 yaşında fen lisesi öğren
 | Ürün sahibi kullanımı hiç göremiyor (veri cihazda) | Ürün sahibi | "Haftalık özeti paylaş": kimliksiz kısa metin (oturum sayısı, dakika/ders, değerlendirme dolduruldu mu, kontrol hissi). Öğrenci mesajla gönderir. |
 | Başarı ölçütleri kendi ilkeleriyle çelişiyordu | Ürün sahibi | Tek birincil ölçüt: 4 haftanın en az 3'ünde, haftada 5 ve üzeri günde en az bir oturum. |
 | En tehlikeli varsayım test edilmemiş: "her akşam kendiliğinden açar" | Ürün sahibi | Kod yazılmadan önce 5 günlük kâğıt kart testi. Uygulamada telefona kurulum yönlendirmesi. Günlük hatırlatma bildirimi ikinci sürüme (teknik neden aşağıda). |
-| İki cihazda veri kopar; yedek dosyası taşımayı 14 yaşındaki yapmaz | Öğrenci, ürün sahibi, geliştirici | İlk sürümde açıkça "ana cihazını seç". İkinci sürümde 6 kelimelik eşleme koduyla aktarım (Vercel'in veri deposu üzerinden). Veri modeli buna bugünden hazır. |
-| Çevrimdışı dosyası eski sürümde takılı bırakır; Vercel'in temiz adres ayarıyla çakışır | Geliştirici | Sayfa açılışı önce internetten, yoksa önbellekten. "Yeni sürüm hazır, yenile" bildirimi. Adres yapısı Vercel'e göre düzeltildi. |
+| İki cihazda veri kopar; yedek dosyası taşımayı 14 yaşındaki yapmaz | Öğrenci, ürün sahibi, geliştirici | İlk sürümde açıkça "ana cihazını seç". İkinci sürümde 6 kelimelik eşleme koduyla aktarım (Cloudflare'ın anahtar-değer deposu üzerinden). Veri modeli buna bugünden hazır. |
+| Çevrimdışı dosyası eski sürümde takılı bırakır; barındırma servisinin temiz adres ayarıyla çakışır | Geliştirici | Sayfa açılışı önce internetten, yoksa önbellekten. "Yeni sürüm hazır, yenile" bildirimi. Adres yapısı buna göre düzeltildi. |
 | iPhone'da Safari 7 gün kullanılmayan sitenin verisini siler | Geliştirici | Ana ekrana kurulu uygulamada bu olmaz: iPhone'da kurulum kartı gösterilir. Haftalık değerlendirme sonunda yedek hatırlatması; 14 gündür yedek yoksa uyarı. |
 | Sayaç arka planda yavaşlar, iPhone'da durur | Geliştirici | Bitiş saati kaydedilir, kalan süre her seferinde saatten hesaplanır. Ekrana dönünce yeniden çizilir. Dürüst uyarı: "Ekranı kilitlersen zil çalmaz." |
 | Gece 00:00–03:00 arası tarih kayar; hafta hesabı | Geliştirici | Günün sınırı sabah 04:00. Gece yarısından sonraki oturum önceki güne yazılır. Tarih anahtarları yerel saatle. |
@@ -163,20 +163,20 @@ Değerlendiriciler: kişisel eğitim koçu, 14–15 yaşında fen lisesi öğren
 
 # BÖLÜM C — İLK SÜRÜM PLANI
 
-## 7. Teknik yaklaşım ve Vercel, düz dille
+## 7. Teknik yaklaşım ve Cloudflare, düz dille
 
-- **Web sitesi olarak yapılır, Vercel'de yayınlanır.** Bilgisayarda tarayıcıda açılır; telefonda "ana ekrana ekle" denince uygulama gibi çalışır. Vercel ücretsiz, güvenli bağlantı (https) hazır gelir; bu, çevrimdışı çalışma ve ekranı açık tutma gibi özellikler için zorunlu.
+- **Web sitesi olarak yapılır, Cloudflare Pages'te yayınlanır.** Bilgisayarda tarayıcıda açılır; telefonda "ana ekrana ekle" denince uygulama gibi çalışır. Cloudflare Pages ücretsiz, özel GitHub depolarını da kabul eder, güvenli bağlantı (https) hazır gelir; bu, çevrimdışı çalışma ve ekranı açık tutma gibi özellikler için zorunlu.
 - **İnternet gerekmez.** İlk açılıştan sonra sayfa cihaza kaydedilir. Yeni sürüm çıkınca "yenile" bildirimi gelir; eski sürümde takılı kalmaz.
 - **Hesap, şifre, sunucu yok.** Veri öğrencinin cihazında. İlk sürümde öğrenci bir ana cihaz seçer. Cihazlar arası aktarım ikinci sürümde eşleme koduyla gelir; bunun için gereken kayıt yapısı (her kaydın kimliği, güncellenme zamanı, silinme izi) ilk sürümde kurulur.
 - **Ek kütüphane, kurulum, derleme yok.** Düz HTML, CSS ve JavaScript. Bu kapsam için doğru; büyük çatılar bakım yükü ekler, değer katmaz. Dosya adreslerine sürüm numarası eklenerek önbellek sorunları önlenir.
 - **Yazı tipleri uygulamanın içinde barındırılır** (Türkçe karakterli alt küme). Google servisine bağımlılık yok; çevrimdışı da aynı görünür.
 - **Analitik yok.** Tek öğrenci, çocuk verisi; hiçbir şey toplanmaz. Ürün sahibi kullanımı "haftalık özeti paylaş" metniyle görür.
 
-### Vercel yapılandırması
+### Cloudflare Pages yapılandırması
 - Proje kökü `app`, çatı "Other", derleme komutu boş.
-- `app/vercel.json`: temiz adresler açık; çevrimdışı dosyası ve ana sayfa asla önbelleklenmez; `css/`, `js/`, `fonts/` bir yıl önbelleklenir (adreslerde sürüm numarası olduğu için güvenli); manifest için doğru içerik türü; temel güvenlik başlıkları (içerik türü zorlaması, kamera/mikrofon/konum kapalı).
+- `app/_headers`: çevrimdışı dosyası ve ana sayfa asla önbelleklenmez; `css/`, `js/`, `fonts/` bir yıl önbelleklenir (adreslerde sürüm numarası olduğu için güvenli); manifest için doğru içerik türü; temel güvenlik başlıkları (içerik türü zorlaması, kamera/mikrofon/konum kapalı).
 - Her yayın öncesi önizleme adresi telefonda denenir.
-- Yayın için kullanıcının Vercel hesabına bağlı bir git deposu gerekir. Proje klasöründe git deposu açılır; kullanıcı Vercel'e bağlar ya da bilgisayarda Vercel komut satırı oturumu varsa doğrudan yayınlanır.
+- Yayın: Cloudflare hesabında "Workers & Pages → Create → Pages → Connect to Git" ile `Bilsem-Proje-Grubu/fener` deposu bağlanır. Build command boş, build output directory `app`. Her `main` dalına gönderim otomatik yayınlanır; diğer dallar önizleme adresi alır.
 
 ### Veri modeli (teknik not)
 Tek kök nesne: `schema: 1`, `studentId: "local"`, `deviceId`, `syncCode: null`. Her kayıtta `id`, `createdAt`, `updatedAt`, silinenlerde `deletedAt`. Bölümler: profil, ayarlar, okul programı, sınav/teslim listesi, günler (3 iş), oturumlar, haftalar (plan, hedefler, değerlendirme), notlar ve sorular, sayaç durumu, son yedek zamanı, rehber okundu işaretleri. Yedek dosyası: `{app, schema, exportedAt, data}`; yükleme önce doğrular, sonra gerekirse dönüştürür. Veri katmanı baştan asenkron arayüzle yazılır ki ileride depo değişince ekran kodu bozulmasın.
@@ -249,7 +249,7 @@ Ad; "neden çalışıyorum" cümlesi (isteğe bağlı, uygun anlarda görünür)
 
 ```
 app/
-  index.html, manifest.webmanifest, sw.js, vercel.json
+  index.html, manifest.webmanifest, sw.js, _headers
   icon-192.png, icon-512.png, apple-touch-icon.png
   fonts/            Fraunces ve Figtree, latin-ext woff2
   css/app.css
@@ -266,7 +266,7 @@ tests/              node --test ile: tarih, hafta, sayaç, tekrar aralığı, d�
 
 ## 10b. Yapım sırası
 
-1. Git deposu, sürüm sabiti, Vercel yapılandırması, yazı tipleri, tasarım sistemi, veri katmanı ve testleri.
+1. Git deposu, sürüm sabiti, Cloudflare yapılandırması, yazı tipleri, tasarım sistemi, veri katmanı ve testleri.
 2. İlk açılış ve Bugün ekranı, tam ekran sayaç. Burada durup bilgisayar ve telefonda denenir.
 3. Tekrar: not, soru şablonları, aralık hesabı, sırası gelenler.
 4. Hafta: sınav listesi, plan sihirbazı, değerlendirme, özet metni.
@@ -281,7 +281,7 @@ tests/              node --test ile: tarih, hafta, sayaç, tekrar aralığı, d�
 - Chrome'da uçtan uca: ilk açılış → 3 iş → dördüncü iş teklifi → oturum başlat → sayfayı yenile, sayaç devam ediyor → bitir → ölçek → not yaz → cihaz saatini ertesi güne al → tekrar kartı → plan sihirbazı → değerlendirme → özet metni → yedek indir → sıfırla → yedek yükle, veri tam.
 - Telefon genişliğinde ekran görüntüleri; tam ekran sayaç tek elle; karanlık tema; "hareketi azalt".
 - Gece 22:30 sonrası öneri ekranı ve "yine de 20 dakika" yolu.
-- Vercel önizleme adresi iPhone Safari'de: kurulum kartı, ekran açık kalma, ses.
+- Cloudflare önizleme adresi iPhone Safari'de: kurulum kartı, ekran açık kalma, ses.
 - Çevrimdışı: uçak modunda açılıyor; yeni yayın sonrası "yenile" bildirimi geliyor.
 
 ## 12. Deneme protokolü ve başarı ölçütleri
@@ -293,16 +293,16 @@ tests/              node --test ile: tarih, hafta, sayaç, tekrar aralığı, d�
 
 ## 13. İkinci sürüme bırakılanlar
 
-Karışık soru seti; cihazlar arası eşleme kodu (Vercel veri deposu ve küçük bir sunucu işlevi); günlük hatırlatma bildirimi (iPhone'da yalnızca kurulu uygulamaya ve sunucu üzerinden gönderilebiliyor, aynı altyapı); paylaşılabilir haftalık görsel kart; arkadaşla birlikte çalışma; motivasyon cümleleri havuzu (üst üste iki "dağıldım" sonrası tek cümle); büyüme zihniyeti için iki uzun oturum.
+Karışık soru seti; cihazlar arası eşleme kodu (Cloudflare KV deposu ve küçük bir Worker); günlük hatırlatma bildirimi (iPhone'da yalnızca kurulu uygulamaya ve sunucu üzerinden gönderilebiliyor, aynı altyapı); paylaşılabilir haftalık görsel kart; arkadaşla birlikte çalışma; motivasyon cümleleri havuzu (üst üste iki "dağıldım" sonrası tek cümle); büyüme zihniyeti için iki uzun oturum.
 
 ## 13b. Sınıfa veya BİLSEM'e büyürken (bugün yalnızca not)
 
-Öğrenci kimliği alanı bugünden var. Hesap gerektiğinde: 18 yaş altı için veli açık rızası, en az veri, veri barındırma bölgesi seçimi (Vercel'de Avrupa), öğretmen görünümünün yalnızca öğrencinin onayladığı özetleri göstermesi. Okul programı öğrenciye değil "programa" bağlı tutulur ki sınıf ortak programı paylaşılabilsin.
+Öğrenci kimliği alanı bugünden var. Hesap gerektiğinde: 18 yaş altı için veli açık rızası, en az veri, veri barındırma bölgesi seçimi (Cloudflare'da Avrupa bölgesi), öğretmen görünümünün yalnızca öğrencinin onayladığı özetleri göstermesi. Okul programı öğrenciye değil "programa" bağlı tutulur ki sınıf ortak programı paylaşılabilsin.
 
 ## 14. Açık noktalar
 
 1. Uygulama adı: varsayılan "Fener"; öğrenciye üç seçenek sunulacak.
-2. Vercel'e bağlanma: git deposu hazırlanacak; yayını kullanıcının Vercel hesabı yapar ya da bilgisayarda Vercel komut satırı oturumu varsa ben yayınlarım.
+2. Cloudflare'a bağlanma: depo `github.com/Bilsem-Proje-Grubu/fener` adresinde. Yayını Cloudflare hesabı olan kişi yukarıdaki adımlarla bir kez bağlar; sonrası otomatik.
 
 ---
 
