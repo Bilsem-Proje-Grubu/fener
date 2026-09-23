@@ -1,4 +1,4 @@
-import { $, on, esc, dayKey, addDays, diffDays, weekStart, weekDays, fmtRange, fmtDate } from '../util.js';
+import { $, on, esc, dayKey, addDays, diffDays, weekStart, weekDays, fmtRange, fmtDate, isIosStandaloneEligible } from '../util.js';
 import * as store from '../store.js';
 import { VERSION, BUILD } from '../version.js';
 
@@ -117,6 +117,15 @@ export async function renderAyarlar(root) {
       </div>`;
   }
 
+  function installCardHtml() {
+    if (!isIosStandaloneEligible()) return '';
+    return `
+      <div class="card danger-card">
+        <h2>Ana ekrana ekle</h2>
+        <p class="hint">iPhone'da Safari, 7 gün açılmayan sitelerin verisini silebiliyor. Paylaş simgesinden "Ana Ekrana Ekle"yi seç.</p>
+      </div>`;
+  }
+
   function versionHtml() {
     return `<div class="card"><h2>Sürüm</h2><p class="hint">Fener ${esc(VERSION)} (${esc(BUILD)})</p></div>`;
   }
@@ -152,7 +161,7 @@ export async function renderAyarlar(root) {
   function paint() {
     root.innerHTML = `
       <div class="greet"><h1>Ayarlar</h1></div>
-      ${profileHtml()}${timesHtml()}${wallHtml()}${shareHtml()}${backupHtml()}${versionHtml()}${resetHtml()}
+      ${installCardHtml()}${profileHtml()}${timesHtml()}${wallHtml()}${shareHtml()}${backupHtml()}${versionHtml()}${resetHtml()}
     `;
   }
 

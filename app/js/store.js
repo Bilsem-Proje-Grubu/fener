@@ -32,9 +32,24 @@ function defaultData() {
   };
 }
 
+// Eksik alanları varsayılanla tamamlar: eski veya elle düzenlenmiş bir
+// yedek, sonradan eklenen alanları (ör. guideRead) taşımıyor olabilir.
 function migrate(data) {
   if (!data || typeof data !== 'object' || !data.schema) return defaultData();
-  return data;
+  const base = defaultData();
+  return {
+    ...base,
+    ...data,
+    profile: { ...base.profile, ...(data.profile || {}) },
+    settings: { ...base.settings, ...(data.settings || {}) },
+    schedule: data.schedule || [],
+    exams: data.exams || [],
+    days: data.days || {},
+    sessions: data.sessions || [],
+    weeks: data.weeks || {},
+    notes: data.notes || [],
+    guideRead: data.guideRead || {},
+  };
 }
 
 let cache = null;

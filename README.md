@@ -32,13 +32,13 @@ Bitmiş olanlar:
 - `app/js/app.js` — yönlendirme (hash tabanlı, `?s=` gibi sorgu parametrelerini view'lara iletir), menü (telefonda alt sekme, bilgisayarda sol menü), "yeni sürüm hazır" bildirimi.
 - `app/index.html`, `app/sw.js` — yeniden yazıldı: sayfa açılışı önce internetten, yazı tipleri tamamen içeriden (Google bağımlılığı kaldırıldı).
 - `app/_headers` — Cloudflare Pages önbellek ve güvenlik başlıkları.
+- `app/manifest.webmanifest` — açıklama, kapsam, kategori eklendi.
+- iPhone kurulum kartı: iOS Safari'de kurulu değilse ilk açılış sonunda ve Ayarlar'da "ana ekrana ekle" uyarısı (`isIosStandaloneEligible`, `app/js/util.js`).
+- `tests/` — `node --test` ile 24 test: tarih/hafta hesabı, sayaç (yenileme sonrası kalan süre dahil), tekrar aralığı, yedek doğrulama (bozuk/eksik yedek reddi, eski yedeğin yeni şemaya tamamlanması).
 
-Beş sekme de tamam. Bilgisayarda ve telefon genişliğinde (390px) uçtan uca denendi: ilk açılış → Bugün → iş ekleme → sayaç başlatma → tam ekran odak → bitirme → üçlü ölçek → otomatik mola; Tekrar → yeni not/soru ekleme → sırası gelen kart → cevabı göster → hatırladım → aralık ilerlemesi; Hafta → sınav ekleme → plan sihirbazı → kaydet → haftayı değerlendir → kaydet → özeti panoya kopyala; Rehber → bölüm açma → okundu işaretleme → derin bağlantı; Ayarlar → ad/süre değiştirme → yedek indirme → yedek yükleme (veri doğru geri geldi) → sıfırlama başlat → geri al (veri silinmedi, doğrulandı). Konsol hatası yok.
+Beş sekme de tamam. Bilgisayarda ve telefon genişliğinde (390px), hem normal hem iPhone Safari kimliğiyle uçtan uca denendi: ilk açılış → Bugün → iş ekleme → sayaç başlatma → tam ekran odak → bitirme → üçlü ölçek → otomatik mola; Tekrar → yeni not/soru ekleme → sırası gelen kart → cevabı göster → hatırladım → aralık ilerlemesi; Hafta → sınav ekleme → plan sihirbazı → kaydet → haftayı değerlendir → kaydet → özeti panoya kopyala; Rehber → bölüm açma → okundu işaretleme → derin bağlantı; Ayarlar → ad/süre değiştirme → yedek indirme → yedek yükleme (veri doğru geri geldi) → sıfırlama başlat → geri al (veri silinmedi, doğrulandı); iPhone kimliğinde ilk açılış sonunda ve Ayarlar'da kurulum kartı doğru çıkıyor. Konsol hatası yok, `node --test` 24/24 geçiyor.
 
-Henüz yazılmamış, sıradaki işler (FENER-PLAN.md bölüm 10'daki yapım sırası):
-1. `manifest.webmanifest` gözden geçirme, ikon/iPhone kurulum kartı denemesi.
-2. `tests/` — `node --test` ile tarih, sayaç, tekrar aralığı, yedek doğrulama testleri.
-3. Uçtan uca deneme gerçek bir öğrenciyle, düzeltmeler, `v0.1` etiketi, Cloudflare Pages yayını.
+Henüz yazılmamış, sıradaki iş: Uçtan uca deneme gerçek bir öğrenciyle, düzeltmeler, `v0.1` etiketi, Cloudflare Pages yayını (bkz. FENER-PLAN.md bölüm 10b, adım 8 ve bölüm 12).
 
 ## Yerelde çalıştırma
 
@@ -50,6 +50,12 @@ python3 -m http.server 8080
 ```
 
 Sonra tarayıcıda `http://localhost:8080`. (Dosyayı çift tıklayarak açmak yetmez; çevrimdışı dosyası ve modüller `http` ister.)
+
+Testleri çalıştırmak için depo kökünden:
+
+```
+node --test
+```
 
 ## Yayın: Cloudflare Pages
 

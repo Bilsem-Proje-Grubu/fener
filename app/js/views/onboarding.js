@@ -1,4 +1,4 @@
-import { $, on, esc } from '../util.js';
+import { $, on, esc, isIosStandaloneEligible } from '../util.js';
 import * as store from '../store.js';
 
 const NAMES = ['Fener', 'Kaşif', 'Öncü'];
@@ -15,6 +15,23 @@ export async function renderOnboarding(root, onDone) {
   let mainDevice = true;
 
   function canStart() { return !!(name || customName.trim()); }
+
+  function paintInstallCard() {
+    root.innerHTML = `
+      <div class="onboard">
+        <div class="step">
+          <h1 class="display">Neredeyse bitti.</h1>
+          <p class="hint">iPhone'da Safari, 7 gün açılmayan sitelerin verisini silebiliyor. Bunu önlemek için Fener'i ana ekranına ekle.</p>
+          <ol class="hint" style="padding-left:1.2em">
+            <li>Alttaki paylaş simgesine dokun.</li>
+            <li>"Ana Ekrana Ekle" seçeneğini bul.</li>
+            <li>Sağ üstten "Ekle"ye dokun.</li>
+          </ol>
+        </div>
+        <button type="button" class="btn-primary btn-big" id="continueAfterInstall">Devam et</button>
+      </div>`;
+    on(root, 'click', '#continueAfterInstall', () => onDone());
+  }
 
   function paint() {
     root.innerHTML = `
@@ -67,6 +84,7 @@ export async function renderOnboarding(root, onDone) {
       data.settings.focusMinutes = d.focus;
       data.settings.breakMinutes = d.brk;
     });
+    if (isIosStandaloneEligible()) { paintInstallCard(); return; }
     onDone();
   });
 

@@ -129,6 +129,15 @@ export function debounce(fn, ms) {
   return (...a) => { clearTimeout(t); t = setTimeout(() => fn(...a), ms); };
 }
 
+/** iPhone Safari'de siteler 7 gün kullanılmayınca verisini silebilir;
+ * ana ekrana kurulu uygulamada bu olmaz. Kurulmamış iOS Safari'de true. */
+export function isIosStandaloneEligible() {
+  const ua = navigator.userAgent || '';
+  const isIos = /iphone|ipad|ipod/i.test(ua) && !window.MSStream;
+  const isStandalone = navigator.standalone === true || (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches);
+  return isIos && !isStandalone;
+}
+
 export const SUBJECTS = [
   'Matematik', 'Fizik', 'Kimya', 'Biyoloji', 'Türk Dili ve Edebiyatı', 'İngilizce',
   'Tarih', 'Coğrafya', 'Din Kültürü', 'Bilişim', 'Beden Eğitimi', 'Görsel Sanatlar / Müzik', 'Sağlık ve Trafik', 'Diğer'
