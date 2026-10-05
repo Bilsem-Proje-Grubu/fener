@@ -259,6 +259,7 @@ body.onboarding .rail, body.onboarding .tabs { display: none; }
   z-index: 60; max-width: 90vw; text-align: center;
 }
 .toast.show { opacity: 1; transform: translate(-50%, 0); }
+.toast.tappable { pointer-events: auto; cursor: pointer; }
 
 @media (min-width: 880px) { .toast { bottom: 24px; } }
 
