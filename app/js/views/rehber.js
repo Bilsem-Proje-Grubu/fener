@@ -77,6 +77,10 @@ export async function renderRehber(root, params) {
         <h1>Bilimsel çalışmak</h1>
         <p class="hint">${readCount}/${SECTIONS.length} bölüm okundu. Her biri yaklaşık 2 dakika.</p>
       </div>
+      <a class="card howto-teaser" href="#/nasil">
+        <strong>Fener nasıl çalışır?</strong>
+        <span class="hint">Uygulamanın ne işe yaradığı ve günün akışı.</span>
+      </a>
       ${SECTIONS.map(sectionHtml).join('')}`;
     if (openId) {
       const el = root.querySelector(`[data-id="${openId}"].guide-card`);
