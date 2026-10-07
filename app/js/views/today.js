@@ -1,4 +1,4 @@
-import { $, $$, on, esc, uid, dayKey, addDays, diffDays, fmtDate, fmtClock, fmtMinutes, minutesNow, parseHM, SUBJECTS } from '../util.js';
+import { $, $$, on, esc, uid, dayKey, addDays, diffDays, fmtDate, fmtClock, fmtMinutes, minutesNow, parseHM, DAY_START_HOUR, SUBJECTS } from '../util.js';
 import * as store from '../store.js';
 import { startFocus, startBreak, remaining, progress, extend, isDone, elapsedMinutes, chime, keepAwake, primeAudio } from '../timer.js';
 import { newQuestion } from '../spaced.js';
@@ -59,7 +59,8 @@ export async function renderToday(root) {
   function isNightWindow() {
     const bedtime = parseHM(data.settings.bedtime || '22:30');
     const now = minutesNow();
-    return now >= bedtime - 30 && now < bedtime + 90;
+    // Yatma saatinden yarım saat önce başlar, gün sınırına (04:00) kadar sürer.
+    return now >= bedtime - 30 || now < DAY_START_HOUR * 60;
   }
 
   function bannerHtml() {
@@ -70,7 +71,7 @@ export async function renderToday(root) {
     const unfinished = bucket.tasks.filter(t => !t.done);
     if (!unfinished.length) return '';
     return `
-      <div class="card">
+      <div class="card card--accent">
         <h2>Hoş geldin.</h2>
         <p class="hint">${unfinished.length} iş kalmıştı. Bugüne taşıyayım mı?</p>
         <div class="row">
@@ -110,7 +111,7 @@ export async function renderToday(root) {
     const n = dueQuestionCount();
     if (!n) return '';
     return `
-      <div class="card">
+      <div class="card card--accent">
         <div class="row between">
           <div>
             <strong>Bugün hatırlanacak ${n} soru</strong>

@@ -7,6 +7,7 @@ import { renderTekrar } from './views/tekrar.js';
 import { renderHafta } from './views/hafta.js';
 import { renderRehber } from './views/rehber.js';
 import { renderAyarlar } from './views/ayarlar.js';
+import { renderNasil } from './views/nasil.js';
 
 const ROUTES = [
   { path: 'bugun', label: 'Bugün', render: renderToday },
@@ -18,6 +19,11 @@ const ROUTES = [
 
 const main = $('#main');
 let destroyCurrent = null;
+
+// Menüde görünmeyen, ama adresle ve ? düğmesiyle açılan ekranlar.
+const HIDDEN_ROUTES = [
+  { path: 'nasil', label: 'Fener nasıl çalışır', render: renderNasil },
+];
 
 function buildNav() {
   const items = ROUTES.map(r => `<li><a href="#/${r.path}" data-path="${r.path}">${r.label}</a></li>`).join('');
@@ -36,7 +42,9 @@ async function route() {
 
   if (!onboarded) {
     document.body.classList.add('onboarding');
-    const result = await renderOnboarding(main, () => {
+    const view = document.createElement('div');
+    main.replaceChildren(view);
+    const result = await renderOnboarding(view, () => {
       document.body.classList.remove('onboarding');
       location.hash = '#/bugun';
       route();
@@ -47,11 +55,13 @@ async function route() {
 
   document.body.classList.remove('onboarding');
   const [path, query] = (location.hash.replace(/^#\//, '') || 'bugun').split('?');
-  const r = ROUTES.find(x => x.path === path) || ROUTES[0];
+  const r = ROUTES.find(x => x.path === path) || HIDDEN_ROUTES.find(x => x.path === path) || ROUTES[0];
   setActive(r.path);
-  main.innerHTML = '';
+  const view = document.createElement('div');
+  main.replaceChildren(view);
   main.focus();
-  const result = await r.render(main, new URLSearchParams(query || ''));
+  window.scrollTo(0, 0);
+  const result = await r.render(view, new URLSearchParams(query || ''));
   destroyCurrent = result && result.destroy;
 }
 

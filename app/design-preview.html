@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<link rel="icon" href="data:,">
+<title>Fener tasarım kataloğu</title>
+<!-- Geliştirme sayfası: servis çalışanı önbelleğine EKLENMEZ, uygulamadan bağlanmaz. -->
+<link rel="stylesheet" href="css/app.css">
+<style>
+  /* Yalnızca bu katalog sayfasına ait; uygulama bileşeni değildir. */
+  .pv { max-width: 920px; margin: 0 auto; padding: 24px max(16px, env(safe-area-inset-right)) 96px max(16px, env(safe-area-inset-left)); }
+  .pv-bar { position: sticky; top: 0; z-index: var(--z-sticky); display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+    padding: 10px 0; margin-bottom: 8px; background: color-mix(in srgb, var(--bg) 90%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+  .pv-bar h1 { font-size: var(--fs-lg); }
+  .pv-themes { display: flex; gap: 6px; }
+  .pv section { margin: 40px 0; }
+  .pv section > h2 { font-size: var(--fs-xl); margin-bottom: 4px; }
+  .pv section > .hint { margin-bottom: 16px; }
+  .pv-grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+  .pv-swatches { display: grid; gap: 8px; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); }
+  .pv-sw { border: 1px solid var(--line-strong); border-radius: var(--radius-sm); overflow: hidden; background: var(--paper); font-size: var(--fs-xs); }
+  .pv-sw i { display: block; height: 44px; border-bottom: 1px solid var(--line-strong); }
+  .pv-sw span { display: block; padding: 6px 8px; color: var(--ink-soft); }
+  .pv-sw b { color: var(--ink); display: block; }
+  .pv-type > * { margin: 0 0 10px; }
+  .pv-box { height: 44px; background: var(--cobalt-soft); border: 1px solid var(--cobalt); border-radius: var(--radius-sm); }
+  /* Menü demoları: gerçek yerleşimde sabit; burada akışa alınır. */
+  .pv-rail { display: flex !important; position: static !important; width: 232px !important; height: auto !important; border: 1px solid var(--line); border-radius: var(--radius); }
+  @media (max-width: 879px) { .pv-rail { display: none !important; } }
+  .pv-tabs { position: static !important; display: block !important; border: 1px solid var(--line); border-radius: var(--radius); max-width: 420px; }
+  .pv-beher { position: relative; height: 150px; border: 2px solid var(--line-strong); border-radius: var(--radius) var(--radius) var(--radius-lg) var(--radius-lg); overflow: hidden; background: var(--paper); }
+  .pv-beher .fill { position: absolute; left: 0; right: 0; bottom: 0; height: 60%; background: linear-gradient(var(--fill-edge) 0 3px, var(--fill) 3px); }
+  .pv-beher .clock { position: relative; z-index: 2; font-family: var(--font-display); font-size: var(--fs-clock); font-weight: 600; text-align: center; padding-top: 28px; font-variant-numeric: tabular-nums; }
+  .pv-beher::after { content: ''; position: absolute; inset: 0 0 0 auto; width: 18px; z-index: 3;
+    background: repeating-linear-gradient(to bottom, var(--tick) 0 1.5px, transparent 1.5px 25%) right / 18px 100% no-repeat, repeating-linear-gradient(to bottom, var(--tick) 0 1px, transparent 1px 5%) right / 9px 100% no-repeat; }
+  .pv-states { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+  .pv-force-hover { border-color: var(--ink-soft) !important; background: var(--paper-2) !important; }
+  .pv-toast { position: static !important; transform: none !important; opacity: 1 !important; display: inline-block; }
+</style>
+</head>
+<body>
+<div class="pv">
+  <div class="pv-bar">
+    <h1>Fener tasarım kataloğu</h1>
+    <div class="pv-themes" role="group" aria-label="Tema">
+      <button type="button" class="chip selected" data-theme-set="">Sistem</button>
+      <button type="button" class="chip" data-theme-set="light">Açık</button>
+      <button type="button" class="chip" data-theme-set="dark">Karanlık</button>
+    </div>
+  </div>
+
+  <section id="renk">
+    <h2>Renk</h2>
+    <p class="hint">Anlamsal tokenlar. Bileşenlerde ham renk yazılmaz.</p>
+    <div class="pv-swatches">
+      <div class="pv-sw"><i style="background:var(--bg)"></i><span><b>--bg</b>zemin</span></div>
+      <div class="pv-sw"><i style="background:var(--paper)"></i><span><b>--paper</b>yüzey</span></div>
+      <div class="pv-sw"><i style="background:var(--paper-2)"></i><span><b>--paper-2</b>ikincil yüzey</span></div>
+      <div class="pv-sw"><i style="background:var(--ink)"></i><span><b>--ink</b>yazı</span></div>
+      <div class="pv-sw"><i style="background:var(--ink-soft)"></i><span><b>--ink-soft</b>ikincil yazı</span></div>
+      <div class="pv-sw"><i style="background:var(--line)"></i><span><b>--line</b>ayraç</span></div>
+      <div class="pv-sw"><i style="background:var(--line-strong)"></i><span><b>--line-strong</b>alan kenarı</span></div>
+      <div class="pv-sw"><i style="background:var(--cobalt)"></i><span><b>--cobalt</b>vurgu</span></div>
+      <div class="pv-sw"><i style="background:var(--cobalt-soft)"></i><span><b>--cobalt-soft</b>seçili zemin</span></div>
+      <div class="pv-sw"><i style="background:var(--yellow)"></i><span><b>--yellow</b>fosforlu</span></div>
+      <div class="pv-sw"><i style="background:var(--hl)"></i><span><b>--hl</b>kalem çizgisi</span></div>
+      <div class="pv-sw"><i style="background:var(--good)"></i><span><b>--good</b>başarı</span></div>
+      <div class="pv-sw"><i style="background:var(--warn)"></i><span><b>--warn</b>uyarı</span></div>
+      <div class="pv-sw"><i style="background:var(--danger)"></i><span><b>--danger</b>tehlike</span></div>
+      <div class="pv-sw"><i style="background:var(--fill)"></i><span><b>--fill</b>beher sıvısı</span></div>
+      <div class="pv-sw"><i style="background:var(--margin)"></i><span><b>--margin</b>marj çizgisi</span></div>
+    </div>
+  </section>
+
+  <section id="yazi">
+    <h2>Yazı ölçeği</h2>
+    <p class="hint">Fraunces başlık ve sayaç, Figtree gövde.</p>
+    <div class="card pv-type">
+      <p class="display" style="font-size:var(--fs-3xl)">Sayaç 24:59</p>
+      <h1>Günaydın, Elif.</h1>
+      <h2>Bugünün 3 işi</h2>
+      <h3>Alt başlık</h3>
+      <p class="lede">Giriş metni: bir bölümün ne anlattığını tek cümleyle söyler.</p>
+      <p class="prose">Gövde metni. Aynı soru 1, 7, 30 ve 90 gün sonra karşına çıkıyor; çünkü hatırlamaya çalışmak, tekrar okumaktan daha çok işe yarıyor. Satır uzunluğu <mark>62 karakteri</mark> geçmez.</p>
+      <p class="hint">İpucu metni, ikincil bilgi.</p>
+      <p class="eyebrow">Üst etiket</p>
+    </div>
+  </section>
+
+  <section id="bosluk">
+    <h2>Boşluk, yarıçap, yükselti</h2>
+    <p class="hint">4 piksel ızgarası; kart yarıçapı 16; üç yükselti.</p>
+    <div class="pv-grid">
+      <div class="card"><h2>Yükselti 1</h2><p class="hint">Varsayılan kart.</p></div>
+      <div class="card" style="box-shadow:var(--elev-2)"><h2>Yükselti 2</h2><p class="hint">Birincil kart, beher.</p></div>
+      <div class="card" style="box-shadow:var(--elev-3)"><h2>Yükselti 3</h2><p class="hint">Bildirim, katman.</p></div>
+    </div>
+  </section>
+
+  <section id="dugme">
+    <h2>Düğmeler</h2>
+    <p class="hint">Birincil, ikincil, hayalet, tehlike. Her biri: normal, üzerine gelme, basılı, devre dışı.</p>
+    <div class="card">
+      <div class="pv-states" style="margin-bottom:12px"><button class="btn-primary" type="button">Birincil</button><button class="btn-primary" type="button" disabled>Devre dışı</button>
+        <button class="btn-secondary" type="button">İkincil</button><button class="btn-secondary" type="button" disabled>Devre dışı</button></div>
+      <div class="pv-states" style="margin-bottom:12px"><button class="btn-ghost" type="button">Hayalet</button><button class="btn-ghost" type="button" disabled>Devre dışı</button>
+        <button class="btn-danger" type="button">Tehlike</button><button class="btn-danger" type="button" disabled>Devre dışı</button>
+        <a class="btn-ghost" href="#dugme">Bağlantı düğmesi</a></div>
+      <button class="btn-primary btn-big" type="button">Başla — 25 dk</button>
+    </div>
+  </section>
+
+  <section id="form">
+    <h2>Form alanları</h2>
+    <div class="card"><div class="stack">
+      <div class="field"><label for="f1">Ne yapılacak?</label><input id="f1" type="text" placeholder="Örnek: mol soruları"></div>
+      <div class="field"><label for="f2">Ders</label><select id="f2"><option>Fizik</option><option>Kimya</option></select></div>
+      <div class="row wrap"><div class="grow"><label for="f3">Tarih</label><input id="f3" type="date"></div><div class="grow"><label for="f4">Saat</label><input id="f4" type="time"></div></div>
+      <div class="field"><label for="f5">Bugün ne öğrendin?</label><textarea id="f5" placeholder="Tek cümle yeter."></textarea></div>
+      <div class="field"><label for="f6">Hatalı alan</label><input id="f6" type="text" aria-invalid="true" value="…"><span class="field-error">Bu alan boş kalamaz.</span></div>
+      <div class="field"><label for="f7">Devre dışı</label><input id="f7" type="text" disabled value="Değiştirilemez"></div>
+      <label class="row"><input type="checkbox" checked><span>Bu cihaz ana cihazım</span></label>
+    </div></div>
+  </section>
+
+  <section id="chip">
+    <h2>Chip ve etiket</h2>
+    <div class="card">
+      <div class="chip-row" style="margin-bottom:14px"><button type="button" class="chip">Telefon</button><button type="button" class="chip selected">Yorgunluk</button><button type="button" class="chip">Konu zor</button></div>
+      <div class="scale-row" style="margin-bottom:14px"><button type="button" class="chip">1</button><button type="button" class="chip">2</button><button type="button" class="chip selected">3</button><button type="button" class="chip">4</button><button type="button" class="chip">5</button></div>
+      <div class="row wrap"><span class="tag">Fizik</span><span class="tag tag--hl">Yeni</span><span class="tag tag--good">Okundu</span><span class="tag tag--warn">3 gün</span></div>
+    </div>
+  </section>
+
+  <section id="menu">
+    <h2>Menü</h2>
+    <p class="hint">Alt sekme çubuğu (mobil) ve sol menü (880 piksel üstü). İkonlar CSS ile gelir.</p>
+    <div class="pv-grid">
+      <nav class="tabs pv-tabs" aria-label="Örnek alt menü"><ul class="nav">
+        <li><a href="#menu" data-path="bugun" class="active">Bugün</a></li><li><a href="#menu" data-path="tekrar">Tekrar</a></li>
+        <li><a href="#menu" data-path="hafta">Hafta</a></li><li><a href="#menu" data-path="rehber">Rehber</a></li><li><a href="#menu" data-path="ayarlar">Ayarlar</a></li></ul></nav>
+      <nav class="rail pv-rail" aria-label="Örnek sol menü">
+        <a class="wordmark" href="#menu"><span class="wm-fen">Fen</span>er</a>
+        <ul class="nav">
+          <li><a href="#menu" data-path="bugun" class="active">Bugün</a></li><li><a href="#menu" data-path="tekrar">Tekrar</a></li>
+          <li><a href="#menu" data-path="hafta">Hafta</a></li><li><a href="#menu" data-path="rehber">Rehber</a></li><li><a href="#menu" data-path="ayarlar">Ayarlar</a></li></ul>
+        <p class="rail-foot">Verilerin yalnızca bu cihazda.</p>
+      </nav>
+    </div>
+  </section>
+
+  <section id="kart">
+    <h2>Kartlar</h2>
+    <p class="hint">Temel, birincil, ikincil (sakin), vurgu şeritli, çizgili defter sayfası.</p>
+    <div class="pv-grid">
+      <div class="card"><h2>Temel kart</h2><p class="hint">.card</p></div>
+      <div class="card card--primary"><h2>Birincil kart</h2><p class="hint">.card--primary, ekranın ana işi.</p></div>
+      <div class="card card--quiet"><h2>İkincil kart</h2><p class="hint">.card--quiet, kareli zemin görünür.</p></div>
+      <div class="card card--accent"><h2>Vurgu şeridi</h2><p class="hint">.card--accent</p></div>
+      <div class="card card--warn"><h2>Uyarı şeridi</h2><p class="hint">.card--warn / .exam-card</p></div>
+      <div class="card card--good"><h2>Başarı şeridi</h2><p class="hint">.card--good</p></div>
+      <div class="card danger-card"><h2>Tehlike kartı</h2><p class="hint">.danger-card</p></div>
+      <div class="card card--ruled"><h2>Çizgili sayfa</h2><p>Dilek: Fizik yazılısına hazır olmak</p><p>Engel: Telefon</p></div>
+    </div>
+  </section>
+
+  <section id="beher">
+    <h2>Beher ve sayaç</h2>
+    <p class="hint">Dolu hâlinin %60'ı. Süre her zaman rakamla da yazılır. Sarı üstünde koyu yazı; karanlık temada sıvı kısılır.</p>
+    <div class="pv-grid">
+      <div class="pv-beher"><div class="fill"></div><div class="clock">14:52</div></div>
+      <div class="card beher"><div class="fill" style="height:35%"></div><p class="task-line">Mol kavramı notları</p><div class="clock">25:00</div><button type="button" class="btn-primary btn-big">Başla — 25 dk</button></div>
+    </div>
+    <div class="card" style="margin-top:16px"><p class="hint" style="margin-bottom:8px">İlerleme çubuğu</p>
+      <div class="progress" role="progressbar" aria-label="Örnek" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"><span style="width:40%"></span></div>
+      <div class="progress progress--hl" style="margin-top:10px" role="progressbar" aria-label="Örnek sarı" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"><span style="width:70%"></span></div></div>
+  </section>
+
+  <section id="is">
+    <h2>İş listesi ve hedef noktaları</h2>
+    <div class="card">
+      <div class="goal-line" style="margin:0 0 16px"><span class="goal-dot"></span><span class="goal-dot done"></span><span class="goal-dot target"></span><span class="goal-dot done"></span><span class="goal-dot target"></span><span class="goal-dot"></span><span class="goal-dot done"></span></div>
+      <ul class="task-list">
+        <li class="task-item done"><button type="button" class="task-check" aria-label="Tamamlanmadı işaretle"></button><div><div>Kuvvet ve hareket testi 1</div><div class="task-sub">Fizik</div></div></li>
+        <li class="task-item"><button type="button" class="task-check" aria-label="Tamamlandı işaretle"></button><div><div>Mol kavramı notları</div><div class="task-sub">Kimya · 9 Ekim</div></div></li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="durum">
+    <h2>Boş durum, bildirim, toast</h2>
+    <div class="pv-grid">
+      <div class="card"><div class="empty"><p class="empty-title">Bugün sırası gelen soru yok.</p><p>Yeni bir not ekleyince burada görünür.</p></div></div>
+      <div class="stack">
+        <div class="notice"><p>Yeni sürüm hazır. Yenilemek için dokun.</p></div>
+        <div class="notice notice--good"><p>Yedek indirildi.</p></div>
+        <div class="notice notice--warn"><p>14 günden uzun süredir yedek yok.</p></div>
+        <div class="notice notice--danger"><p>Yedek dosyası okunamadı.</p></div>
+        <div><span class="toast pv-toast">Kaydedildi.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="tekrar">
+    <h2>Tekrar kartı</h2>
+    <div class="card card--primary">
+      <div class="row between"><h2>Bugün sırası gelenler</h2><span class="hint review-count">2 soru</span></div>
+      <span class="tag">Fizik</span>
+      <p class="qa-q">Net kuvvet sıfırsa cisim nasıl hareket eder?</p>
+      <p class="qa-a">Sabit hızla ya da durağan kalır.</p>
+      <div class="scale-row"><button type="button" class="btn-primary">Hatırlamadım</button><button type="button" class="btn-primary">Kısmen</button><button type="button" class="btn-primary">Hatırladım</button></div>
+    </div>
+  </section>
+
+  <section id="hafta">
+    <h2>Hafta kartları</h2>
+    <div class="card card--warn"><div class="row between"><div><strong>Fizik yazılı</strong><div class="hint">12 Ekim Pazartesi</div></div><div class="days display" style="font-size:var(--fs-xl);color:var(--warn)">6 gün</div></div></div>
+    <div class="card"><h2 class="week-title">5 – 11 Ekim</h2><p class="hint">Hafta içi okul: 08:30–16:00. Sonrası boş, sen doldurursun.</p>
+      <div class="wall"><div class="wall-row"><span class="wall-week">28 Eyl</span><span class="wall-cell filled"></span><span class="wall-cell"></span><span class="wall-cell filled"></span><span class="wall-cell"></span><span class="wall-cell filled"></span><span class="wall-cell"></span><span class="wall-cell"></span></div></div></div>
+  </section>
+
+  <section id="rehber">
+    <h2>Rehber kartı</h2>
+    <div class="card guide-card"><div class="guide-head"><span class="guide-num">2</span><span class="guide-title">Unutma eğrisi ve aralıklı tekrar</span><span class="guide-read" aria-label="Okundu">✓</span></div>
+      <div class="guide-dots" aria-label="Kanıt gücü 3/3"><span class="guide-dot filled"></span><span class="guide-dot filled"></span><span class="guide-dot filled"></span></div></div>
+    <div class="card guide-card"><div class="guide-head"><span class="guide-num">3</span><span class="guide-title">Karışık çalışma</span></div>
+      <div class="guide-dots" aria-label="Kanıt gücü 2/3"><span class="guide-dot filled"></span><span class="guide-dot filled"></span><span class="guide-dot"></span></div>
+      <div class="guide-body"><p>Konuları tek tek bitirmek yerine karıştırmak, ilk başta zor gelir ama sınavda daha iyi sonuç verir.</p><p class="guide-foryou">Senin için: bir oturumda iki dersten iki konu dene.</p></div></div>
+  </section>
+</div>
+
+<script>
+  // Tema düğmesi: sistem / açık / karanlık. Kalıcı değil; yalnızca bu sayfada.
+  document.querySelectorAll('[data-theme-set]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var v = b.getAttribute('data-theme-set');
+      if (v) document.documentElement.setAttribute('data-theme', v); else document.documentElement.removeAttribute('data-theme');
+      document.querySelectorAll('[data-theme-set]').forEach(function (x) { x.classList.toggle('selected', x === b); });
+    });
+  });
+</script>
+</body>
+</html>

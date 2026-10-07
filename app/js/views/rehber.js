@@ -60,7 +60,7 @@ export async function renderRehber(root, params) {
       </div>` : '';
     return `
       <div class="card guide-card" data-action="toggle-open" data-id="${s.id}">
-        <div class="guide-head">
+        <div class="guide-head" role="button" tabindex="0" aria-expanded="${isOpen}">
           <span class="guide-num">${s.id}</span>
           <span class="guide-title">${esc(s.title)}</span>
           ${isRead ? '<span class="guide-read" aria-label="Okundu">✓</span>' : ''}
@@ -77,6 +77,10 @@ export async function renderRehber(root, params) {
         <h1>Bilimsel çalışmak</h1>
         <p class="hint">${readCount}/${SECTIONS.length} bölüm okundu. Her biri yaklaşık 2 dakika.</p>
       </div>
+      <a class="card howto-teaser" href="#/nasil">
+        <strong>Fener nasıl çalışır?</strong>
+        <span class="hint">Uygulamanın ne işe yaradığı ve günün akışı.</span>
+      </a>
       ${SECTIONS.map(sectionHtml).join('')}`;
     if (openId) {
       const el = root.querySelector(`[data-id="${openId}"].guide-card`);
@@ -89,6 +93,17 @@ export async function renderRehber(root, params) {
     const id = Number(t.dataset.id);
     openId = openId === id ? null : id;
     paint();
+  });
+
+  on(root, 'keydown', '.guide-head', (e, t) => {
+    if (e.key !== 'Enter' && e.key !== ' ') return;
+    e.preventDefault();
+    const card = t.closest('.guide-card');
+    const id = Number(card.dataset.id);
+    openId = openId === id ? null : id;
+    paint();
+    const again = root.querySelector(`[data-id="${id}"].guide-card .guide-head`);
+    again && again.focus();
   });
 
   on(root, 'click', '[data-action="toggle-read"]', async (e, t) => {
