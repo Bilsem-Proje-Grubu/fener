@@ -38,3 +38,4 @@ body.onboarding .help-link { display: none; }
 .howto-teaser { display: flex; flex-direction: column; gap: 2px; text-decoration: none; color: inherit; border-left: 4px solid var(--yellow); }
 .howto-teaser:hover { border-color: var(--cobalt); }
 @media (min-width: 880px) { .help-link { top: 20px; right: 24px; } }
+.guide-head:focus-visible { outline: 3px solid var(--cobalt); outline-offset: 3px; border-radius: var(--radius-sm); }
