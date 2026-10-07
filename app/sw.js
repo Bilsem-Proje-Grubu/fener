@@ -1,8 +1,8 @@
-const VERSION = '0.1.1';
+const VERSION = '0.1.2';
 const CACHE = `fener-${VERSION}`;
 const ASSETS = [
   './', './index.html', './manifest.webmanifest',
-  './css/app.css?v=0.1.1', './js/app.js?v=0.1.1',
+  './css/app.css?v=0.1.2', './js/app.js?v=0.1.2',
   './js/version.js', './js/util.js', './js/store.js', './js/timer.js', './js/spaced.js', './js/guide-content.js',
   './js/views/onboarding.js', './js/views/today.js', './js/views/tekrar.js', './js/views/hafta.js',
   './js/views/rehber.js', './js/views/ayarlar.js',
