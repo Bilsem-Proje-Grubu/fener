@@ -2,11 +2,19 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { INTRO_CARDS, HOWTO_SECTIONS, KNOWN_ROUTES } from '../app/js/howto-content.js';
 
-test('tanıtım turu tam 3 kart: her birinde başlık ve gövde ya da adımlar var', () => {
-  assert.equal(INTRO_CARDS.length, 3);
+test('tanıtım turu tam 2 kart: her birinde başlık ve gövde ya da zaman akışı var', () => {
+  assert.equal(INTRO_CARDS.length, 2);
   for (const c of INTRO_CARDS) {
     assert.ok(c.title && c.title.length > 3);
-    assert.ok(c.body || (c.steps && c.steps.length));
+    assert.ok(c.body || (c.timeline && c.timeline.length));
+  }
+});
+
+test('günün zaman akışı en az 5 adım; her adımda ne zaman, başlık, gövde, yer ve neden dolu', () => {
+  const card = INTRO_CARDS.find(c => c.id === 'nasil-calisir');
+  assert.ok(card.timeline.length >= 5);
+  for (const t of card.timeline) {
+    for (const k of ['when', 'title', 'body', 'where', 'why']) assert.ok(t[k] && t[k].length > 3, k);
   }
 });
 

@@ -24,6 +24,13 @@ export function introCardHtml(card) {
     <div class="intro-art">${ART[card.art] || ''}</div>
     <h1 class="display">${esc(card.title)}</h1>
     ${card.body ? `<p class="intro-body">${esc(card.body)}</p>` : ''}
+    ${card.timeline ? `<ol class="intro-timeline">${card.timeline.map(t => `
+      <li>
+        <span class="tl-when">${esc(t.when)}</span>
+        <strong class="tl-title">${esc(t.title)}</strong>
+        <p class="tl-body">${esc(t.body)}</p>
+        <p class="tl-meta"><span class="tl-where">${esc(t.where)}</span> · <span class="tl-why">${esc(t.why)}</span></p>
+      </li>`).join('')}</ol>` : ''}
     ${card.steps ? `<ol class="intro-steps">${card.steps.map(s => `<li>${esc(s)}</li>`).join('')}</ol>` : ''}`;
 }
 

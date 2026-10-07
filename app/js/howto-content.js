@@ -14,19 +14,38 @@ export const INTRO_CARDS = [
     id: 'nasil-calisir',
     art: 'dongu',
     title: 'Bir gün böyle geçer.',
-    steps: [
-      'Bugün: üç iş seç.',
-      'Başla: odak sayacı dolarken çalış.',
-      'Akşam: bugün ne öğrendiğini tek cümleyle yaz.',
-      'Tekrar: sırası gelen soruyu kitaba bakmadan cevapla.',
-      'Hafta sonu: haftayı değerlendir, yenisini planla.',
+    timeline: [
+      {
+        when: 'Sabah, 2 dakika', title: 'Üç iş seç',
+        body: 'Bugün ekranında "+ İş ekle" ile günün işlerini yaz. Üç iş yeter; dördüncüyü eklemek istersen Fener yarına atmayı önerir.',
+        where: 'Bugün ekranı', why: 'Uzun liste insanı hiç başlatmaz, üç iş başlatır.',
+      },
+      {
+        when: 'Çalışırken', title: 'Başla\'ya bas',
+        body: 'Sayaç dolarken tek bir işe odaklan, telefon başka odada olsun. Bitince nasıl geçtiğini işaretle: akıştaydım, idare eder ya da dağıldım. Dağıldıysan ne böldüğünü seç. Mola kendiliğinden başlar.',
+        where: 'Bugün ekranı', why: 'Seni neyin böldüğünü görünce çözümü de bulursun.',
+      },
+      {
+        when: 'Gün içinde', title: 'Bugün ne öğrendin',
+        body: 'Öğrendiğin şeyi tek cümleyle yaz. İstersen ona bir soru ekle; Fener o soruyu sana sonra geri sorar.',
+        where: 'Bugün ekranı', why: 'Kendi cümlenle yazmak hatırlamanın ilk adımı.',
+      },
+      {
+        when: 'Ertesi gün ve sonrası', title: 'Tekrar',
+        body: 'Yazdığın sorular 1, 7, 30 ve 90 gün sonra gelir. Kitaba bakmadan cevapla, sonra "hatırladım", "kısmen" ya da "hatırlamadım" de. Hatırladıkça aralık uzar.',
+        where: 'Tekrar ekranı', why: 'Kendini sınamak, yeniden okumaktan çok daha etkili.',
+      },
+      {
+        when: 'Gece', title: 'Bugünlük yeter mi',
+        body: 'Yatma saatinden yarım saat önce Fener sayaç yerine bunu sorar. İstersen "yine de 20 dakika" ile devam edersin; yoksa yarın sabah 20 dakika ekler.',
+        where: 'Bugün ekranı', why: 'Uyku, öğrenmenin tamamlandığı yerdir.',
+      },
+      {
+        when: 'Hafta sonu', title: 'Haftayı değerlendir, yenisini planla',
+        body: 'Üç soruyla haftana bak: ne iyi gitti, ne engelledi, neyi değiştirirsin. Sonra yeni haftanın planını dilek, sonuç, engel ve plan adımlarıyla yaz.',
+        where: 'Hafta ekranı', why: 'Küçük ayarlar, hafta hafta büyük fark yapar.',
+      },
     ],
-  },
-  {
-    id: 'ne-yapmaz',
-    art: 'defter',
-    title: 'Fener neleri yapmaz.',
-    body: 'Puan, rozet ve seri sayacı yok. Atladığın gün için ceza yok. Hesap açmazsın; verilerin yalnızca bu cihazda durur, bu yüzden ara sıra yedek almak iyi olur. Karar hep sende, Fener yalnızca önerir.',
   },
 ];
 
