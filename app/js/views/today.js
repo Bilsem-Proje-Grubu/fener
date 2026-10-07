@@ -70,7 +70,7 @@ export async function renderToday(root) {
     const unfinished = bucket.tasks.filter(t => !t.done);
     if (!unfinished.length) return '';
     return `
-      <div class="card">
+      <div class="card card--accent">
         <h2>Hoş geldin.</h2>
         <p class="hint">${unfinished.length} iş kalmıştı. Bugüne taşıyayım mı?</p>
         <div class="row">
@@ -110,7 +110,7 @@ export async function renderToday(root) {
     const n = dueQuestionCount();
     if (!n) return '';
     return `
-      <div class="card">
+      <div class="card card--accent">
         <div class="row between">
           <div>
             <strong>Bugün hatırlanacak ${n} soru</strong>

@@ -18,7 +18,7 @@ export async function renderTekrar(root) {
 
   function curveCardHtml() {
     return `
-      <div class="card">
+      <div class="card card--accent">
         <h2>Unutma eğrisi</h2>
         <p class="hint">Öğrendiğin bir şeyi ertesi gün büyük ölçüde unutursun; ama kısa bir hatırlama çabası bu eğriyi düzleştirir. Bu yüzden aynı soru 1, 7, 30 ve 90 gün sonra karşına çıkıyor.</p>
         <a class="btn-ghost" href="#/rehber?s=2">Devamı</a>
@@ -38,14 +38,14 @@ export async function renderTekrar(root) {
     const isFirstEver = (note.history || []).length === 0;
     return `
       ${isFirstEver ? curveCardHtml() : ''}
-      <div class="card">
+      <div class="card card--primary">
         <div class="row between">
           <h2>Bugün sırası gelenler</h2>
-          <span class="hint">${due.length} soru</span>
+          <span class="hint review-count">${due.length} soru</span>
         </div>
-        <p class="task-sub">${esc(note.subject)}</p>
-        <p style="font-size:1.1rem;margin:.6em 0 0">${esc(note.q)}</p>
-        ${revealed ? `<p class="hint" style="margin:.4em 0 14px">${esc(note.a)}</p>` : '<div style="margin-bottom:14px"></div>'}
+        <span class="tag">${esc(note.subject)}</span>
+        <p class="qa-q">${esc(note.q)}</p>
+        ${revealed ? `<p class="qa-a">${esc(note.a)}</p>` : ''}
         ${!revealed
           ? `<button type="button" class="btn-primary btn-big" data-action="reveal">Cevabı göster</button>`
           : `<div class="scale-row">
