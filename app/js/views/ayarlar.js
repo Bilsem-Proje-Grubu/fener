@@ -137,7 +137,7 @@ export async function renderAyarlar(root) {
           <h2>Her şeyi sıfırla</h2>
           <p>Emin misin? Tüm veriler bu cihazdan kalıcı olarak silinecek.</p>
           <div class="row">
-            <button type="button" class="btn-primary" data-action="reset-confirm">Evet, sıfırla</button>
+            <button type="button" class="btn-danger" data-action="reset-confirm">Evet, sıfırla</button>
             <button type="button" class="btn-ghost" data-action="reset-cancel">Vazgeç</button>
           </div>
         </div>`;

@@ -29,7 +29,7 @@ export async function renderHafta(root) {
     return `
       <div class="card">
         <div class="row between">
-          <h1 class="display" style="font-size:1.4rem">${esc(fmtRange(monday))}</h1>
+          <h1 class="display week-title">${esc(fmtRange(monday))}</h1>
         </div>
         <p class="hint">Hafta içi okul: ${esc(s.schoolStart)}–${esc(s.schoolEnd)}. Sonrası boş, sen doldurursun.</p>
         <form data-form="school-hours" class="row" style="margin-top:8px;flex-wrap:wrap">
@@ -103,7 +103,7 @@ export async function renderHafta(root) {
       }
       const p = bucket.plan;
       return `
-        <div class="card">
+        <div class="card card--ruled">
           <h2>Bu haftanın planı</h2>
           <p><strong>Dilek:</strong> ${esc(p.wish)}</p>
           <p><strong>Sonuç:</strong> ${esc(p.outcome)}</p>
@@ -200,7 +200,7 @@ export async function renderHafta(root) {
     const stats = weekStats();
     const d = reviewDraft || { best: '', blocker: '', change: '', control: '' };
     return `
-      <div class="card">
+      <div class="card card--ruled">
         <h2>Haftayı değerlendir</h2>
         <p class="hint">Bu hafta ${stats.count} oturum.
           ${Object.entries(stats.bySubject).map(([s, m]) => `${esc(s)}: ${esc(fmtMinutes(m))}`).join(', ') || ''}
