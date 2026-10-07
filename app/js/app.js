@@ -56,12 +56,15 @@ async function route() {
 }
 
 let toastTimer;
-function showToast(msg) {
+function showToast(msg, onTap) {
   const t = $('#toast');
   t.textContent = msg;
+  t.onclick = onTap || null;
+  t.classList.toggle('tappable', !!onTap);
   t.classList.add('show');
   clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => t.classList.remove('show'), 2400);
+  // Dokunulacak bildirim kaybolmaz; öğrenci dokunana kadar kalır.
+  if (!onTap) toastTimer = setTimeout(() => t.classList.remove('show'), 2400);
 }
 window.fenerToast = showToast;
 
@@ -71,7 +74,7 @@ if ('serviceWorker' in navigator) {
       const worker = reg.installing;
       worker && worker.addEventListener('statechange', () => {
         if (worker.state === 'installed' && navigator.serviceWorker.controller) {
-          showToast('Yeni sürüm hazır. Yenilemek için dokun.');
+          showToast('Yeni sürüm hazır. Yenilemek için dokun.', () => location.reload());
         }
       });
     });
