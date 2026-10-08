@@ -45,7 +45,6 @@ export async function renderOnboarding(root, onDone, opts = {}) {
         <div class="intro-card" aria-live="polite">${introCardHtml(INTRO_CARDS[introIdx])}</div>
         <div class="intro-dots" aria-label="${introIdx + 1} / ${INTRO_CARDS.length}">${dots}</div>
         <div class="intro-actions">
-          ${introIdx > 0 ? '<button type="button" class="btn-ghost" data-intro="back">Geri</button>' : '<span></span>'}
           <button type="button" class="btn-primary" data-intro="next">${last ? (opts.replay ? 'Bitti' : 'Başlayalım') : 'İleri'}</button>
         </div>
         ${last ? '' : '<button type="button" class="btn-ghost intro-skip" data-intro="skip">Geç</button>'}
@@ -94,13 +93,11 @@ export async function renderOnboarding(root, onDone, opts = {}) {
   on(root, 'click', '[data-intro="next"]', () => {
     if (introIdx < INTRO_CARDS.length - 1) { introIdx++; paintIntro(); } else endIntro();
   });
-  on(root, 'click', '[data-intro="back"]', () => { if (introIdx > 0) { introIdx--; paintIntro(); } });
   on(root, 'click', '[data-intro="skip"]', () => endIntro());
   document.addEventListener('keydown', onKey);
   function onKey(e) {
     if (!root.querySelector('.intro')) return;
     if (e.key === 'ArrowRight' && introIdx < INTRO_CARDS.length - 1) { introIdx++; paintIntro(); }
-    if (e.key === 'ArrowLeft' && introIdx > 0) { introIdx--; paintIntro(); }
   }
 
   on(root, 'click', '[data-name]', (e, t) => { name = t.dataset.name; customName = ''; paint(); });
