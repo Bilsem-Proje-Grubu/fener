@@ -1,0 +1,76 @@
+/* ==========================================================================
+   Valorant teması — <html data-skin="valorant">
+   Koyu lacivert zemin, sinyal kırmızısı, kırık kâğıt beyazı, keskin köşeler.
+   Yalnızca tokenları geçersiz kılar; bileşenler değişmez. Sistem ve açık/koyu
+   tercihinden bağımsızdır (her zaman koyu). Varsayılan tema "Fener"dir.
+   ========================================================================== */
+
+html:root[data-skin="valorant"] {
+  color-scheme: dark;
+
+  --bg: #0F1923;
+  --grid: #131F2B;
+  --grid-major: #1A2836;
+  --paper: #16212D;
+  --paper-2: #1B2937;
+  --line: #2C3B4B;
+  --line-strong: #6B7C8C;
+  --margin: #FF4655;
+
+  --ink: #ECE8E1;
+  --ink-soft: #AEB8C2;
+  --ink-faint: #94A1AD;
+
+  /* vurgu: "kobalt" adı korunur, değeri Valorant kırmızısı olur */
+  --cobalt: #FF4655;
+  --cobalt-strong: #FF6B77;
+  --cobalt-deep: #B3232F;
+  --cobalt-soft: #3A1A22;
+  --cobalt-ink: #0F1923;
+
+  --yellow: #17DDC4;
+  --yellow-ink: #0F1923;
+  --hl: rgba(23, 221, 196, .55);
+  --hl-soft: rgba(23, 221, 196, .12);
+
+  --good: #17DDC4;
+  --good-soft: #0F2C2D;
+  --warn: #FFB547;
+  --warn-soft: #33260F;
+  --danger: #FF7A85;
+  --danger-strong: #FFA1A8;
+  --danger-ink: #0F1923;
+  --danger-soft: #3A1A22;
+
+  --fill: #0F4A47;
+  --fill-edge: #17DDC4;
+  --tick: rgba(236, 232, 225, .32);
+
+  --font-display: 'Bahnschrift', 'Arial Narrow', 'Roboto Condensed', Impact, sans-serif;
+  --font-body: 'Figtree', system-ui, sans-serif;
+
+  --radius-xs: 0;
+  --radius-sm: 2px;
+  --radius: 2px;
+  --radius-lg: 4px;
+  --radius-pill: 2px;
+
+  --elev-1: 0 0 0 1px rgba(236, 232, 225, .04), 0 4px 14px rgba(0, 0, 0, .4);
+  --elev-2: 0 0 0 1px rgba(236, 232, 225, .06), 0 10px 26px rgba(0, 0, 0, .5);
+  --elev-3: 0 0 0 1px rgba(236, 232, 225, .08), 0 18px 44px rgba(0, 0, 0, .6);
+  --inset-press: inset 0 2px 3px rgba(0, 0, 0, .5);
+}
+
+/* Başlıklar ve düğmeler: büyük harf, açık harf aralığı, keskin görünüm */
+html:root[data-skin="valorant"] :where(h1, h2, h3, .wordmark, .btn-primary, .btn-secondary, .btn-ghost, .btn-danger, .nav a) {
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  font-weight: var(--fw-bold);
+}
+html:root[data-skin="valorant"] .btn-primary {
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%);
+}
+html:root[data-skin="valorant"] .card {
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%);
+}
+html:root[data-skin="valorant"] .wm-fen { color: var(--cobalt); }

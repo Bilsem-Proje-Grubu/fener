@@ -142,3 +142,10 @@ export const SUBJECTS = [
   'Matematik', 'Fizik', 'Kimya', 'Biyoloji', 'Türk Dili ve Edebiyatı', 'İngilizce',
   'Tarih', 'Coğrafya', 'Din Kültürü', 'Bilişim', 'Beden Eğitimi', 'Görsel Sanatlar / Müzik', 'Sağlık ve Trafik', 'Diğer'
 ];
+
+/** Temayı <html data-skin> olarak uygular; 'fener' varsayılan, öznitelik yok. */
+export function applyTheme(theme) {
+  const root = document.documentElement;
+  if (theme === 'valorant') root.setAttribute('data-skin', 'valorant');
+  else root.removeAttribute('data-skin');
+}
