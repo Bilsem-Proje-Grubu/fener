@@ -284,10 +284,17 @@ export async function renderToday(root) {
       ${bannerHtml()}
       ${examCardHtml()}
       ${dueQuestionsHtml()}
-      ${timerHtml()}
+      <div id="timerArea">${timerHtml()}</div>
       ${tasksHtml()}
       ${learnedHtml()}
     `;
+  }
+
+  // Saniyelik güncelleme yalnızca zamanlayıcıyı yeniler; açık form, ders listesi
+  // ve yazılan metin bozulmasın (aksi halde <select> açılır açılmaz kapanıyordu).
+  function paintTimer() {
+    const area = $('#timerArea', root);
+    if (area) area.innerHTML = timerHtml(); else paint();
   }
 
   async function refresh() { paint(); }
@@ -469,6 +476,6 @@ export async function renderToday(root) {
 
   paint();
 
-  const interval = setInterval(() => { if (data.timer) paint(); }, 1000);
+  const interval = setInterval(() => { if (data.timer) paintTimer(); }, 1000);
   return { destroy() { clearInterval(interval); keepAwake(false); } };
 }
