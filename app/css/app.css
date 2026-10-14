@@ -578,4 +578,7 @@ body.onboarding .rail, body.onboarding .tabs { display: none; }
   *, *::before, *::after { transition-duration: 0ms !important; animation-duration: 0ms !important; scroll-behavior: auto !important; }
 }
 
-.dur-input { width: 3.2em; text-align: center; padding: 4px 6px; margin: 0 2px; display: inline-block; }
+
+input.dur-input { width: 4.2em; min-width: 0; flex: 0 0 auto; text-align: center; padding: 8px 6px; margin: 0 4px; display: inline-block; }
+.duration-card > span { display: flex; align-items: center; flex-wrap: wrap; gap: 4px; }
+form[data-form="dur"] { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
