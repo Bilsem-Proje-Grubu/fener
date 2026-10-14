@@ -8,10 +8,14 @@ import { renderHafta } from './views/hafta.js';
 import { renderRehber } from './views/rehber.js';
 import { renderAyarlar } from './views/ayarlar.js';
 import { renderNasil } from './views/nasil.js';
+import { renderOdev } from './views/odev.js';
+import { notifyReminders } from './notify.js';
+import { dayKey } from './util.js';
 
 const ROUTES = [
   { path: 'bugun', label: 'Bugün', render: renderToday },
   { path: 'tekrar', label: 'Tekrar', render: renderTekrar },
+  { path: 'odev', label: 'Ödev', render: renderOdev },
   { path: 'hafta', label: 'Hafta', render: renderHafta },
   { path: 'rehber', label: 'Rehber', render: renderRehber },
   { path: 'ayarlar', label: 'Ayarlar', render: renderAyarlar },
@@ -90,6 +94,14 @@ if ('serviceWorker' in navigator) {
     });
   }).catch(() => { /* çevrimdışı desteği olmadan devam */ });
 }
+
+// Uygulama açılınca (izin varsa) yarın teslim olan ödevleri bildir.
+async function checkReminders() {
+  if (!(await store.isOnboarded())) return;
+  notifyReminders(await store.getData(), dayKey());
+}
+document.addEventListener('visibilitychange', () => { if (!document.hidden) checkReminders(); });
+checkReminders();
 
 buildNav();
 window.addEventListener('hashchange', route);

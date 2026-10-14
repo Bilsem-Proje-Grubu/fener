@@ -92,6 +92,7 @@ hr, .rule { border: 0; border-top: 1px dashed var(--line-strong); margin: var(--
 :root {
   --ico-bugun: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='4'/%3E%3Cpath d='M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M18.7 5.3l-1.6 1.6M6.9 17.1l-1.6 1.6'/%3E%3C/svg%3E");
   --ico-tekrar: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4.5 11.5a7.5 7.5 0 0 1 13-4.6L19.5 9M19.5 4.5V9H15M19.5 12.5a7.5 7.5 0 0 1-13 4.6L4.5 15M4.5 19.5V15H9'/%3E%3C/svg%3E");
+  --ico-odev: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 3.5h9l3.5 3.5v13.5H6z'/%3E%3Cpath d='M15 3.5V7h3.5M9 12h6M9 16h4'/%3E%3C/svg%3E");
   --ico-hafta: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3.5' y='5' width='17' height='15.5' rx='2.5'/%3E%3Cpath d='M3.5 10h17M8 3v4M16 3v4M8 14h2M14 14h2M8 17.2h2'/%3E%3C/svg%3E");
   --ico-rehber: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3.5 5.5C6.2 4.4 9.4 4.6 12 6.4c2.6-1.8 5.8-2 8.5-.9V19c-2.7-1.1-5.9-.9-8.5.9-2.6-1.8-5.8-2-8.5-.9z'/%3E%3Cpath d='M12 6.4V19.9'/%3E%3C/svg%3E");
   --ico-ayarlar: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 7h8M18 7h2M4 17h2M12 17h8'/%3E%3Ccircle cx='15' cy='7' r='2.6'/%3E%3Ccircle cx='9' cy='17' r='2.6'/%3E%3C/svg%3E");
@@ -109,6 +110,7 @@ hr, .rule { border: 0; border-top: 1px dashed var(--line-strong); margin: var(--
 }
 .nav a[data-path="bugun"]::before { --ico: var(--ico-bugun); }
 .nav a[data-path="tekrar"]::before { --ico: var(--ico-tekrar); }
+.nav a[data-path="odev"]::before { --ico: var(--ico-odev); }
 .nav a[data-path="hafta"]::before { --ico: var(--ico-hafta); }
 .nav a[data-path="rehber"]::before { --ico: var(--ico-rehber); }
 .nav a[data-path="ayarlar"]::before { --ico: var(--ico-ayarlar); }
@@ -596,3 +598,16 @@ form[data-form="dur"] { display: flex; align-items: center; flex-wrap: wrap; gap
 
 .form-warn { color: var(--danger-strong); font-size: var(--fs-sm); font-weight: var(--fw-semibold); }
 .form-warn p { margin: var(--sp-2) 0 0; }
+
+/* Ödev hatırlatıcısı */
+.hw-banner { display: block; color: inherit; text-decoration: none; }
+.hw-banner-list { list-style: none; margin: .4em 0 0; padding: 0; }
+.hw-banner-list li { padding: 2px 0; }
+.hw-title { font-weight: var(--fw-medium); overflow-wrap: anywhere; }
+.hw-badge { font-weight: var(--fw-bold); }
+.hw-badge-tomorrow, .hw-badge-today { color: var(--warn); }
+.hw-badge-late { color: var(--danger-strong); }
+.hw-edit { flex-wrap: wrap; }
+.task-item[class*="hw-"] { flex-wrap: wrap; }
+.task-item[class*="hw-"] > div:nth-of-type(1) { flex: 1 1 60%; }
+.hw-actions { flex: 1 1 100%; display: flex; justify-content: flex-end; gap: 4px; }

@@ -2,6 +2,7 @@ import { $, $$, on, esc, uid, dayKey, addDays, diffDays, fmtDate, fmtClock, fmtM
 import * as store from '../store.js';
 import { startFocus, startBreak, remaining, progress, extend, isDone, elapsedMinutes, chime, keepAwake, primeAudio } from '../timer.js';
 import { newQuestion } from '../spaced.js';
+import { reminders } from '../homework.js';
 
 const QUESTION_TEMPLATES = ['… nedir?', '… ile … farkı ne?', 'Şu formülü çıkar: …'];
 const DISTRACTIONS = ['Telefon', 'Yorgunluk', 'Konu zor', 'Başka'];
@@ -106,6 +107,17 @@ export async function renderToday(root) {
           <div class="days">${days === 0 ? 'Bugün' : days + ' gün'}</div>
         </div>
       </div>`;
+  }
+
+  function homeworkBannerHtml() {
+    const items = reminders(data.homework, today);
+    if (!items.length) return '';
+    const urgent = items.some(h => h.info.level === 'tomorrow');
+    return `
+      <a class="card card--warn hw-banner" href="#/odev" role="alert">
+        <strong>${urgent ? 'Yarın teslim edeceğin ödev var' : 'Ödev teslimi yaklaştı'}</strong>
+        <ul class="hw-banner-list">${items.map(h => `<li>${esc(h.title)} <span class="hw-badge hw-badge-${h.info.level}">${esc(h.info.label)}</span></li>`).join('')}</ul>
+      </a>`;
   }
 
   function dueQuestionsHtml() {
@@ -290,6 +302,7 @@ export async function renderToday(root) {
         <h1>${esc(greeting())}${data.profile.name ? ', ' + esc(data.profile.name) : ''}.</h1>
         ${goalLineHtml()}
       </div>
+      ${homeworkBannerHtml()}
       ${bannerHtml()}
       ${examCardHtml()}
       ${dueQuestionsHtml()}
