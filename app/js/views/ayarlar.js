@@ -1,4 +1,4 @@
-import { $, on, esc, dayKey, addDays, diffDays, weekStart, weekDays, fmtRange, fmtDate, isIosStandaloneEligible } from '../util.js';
+import { $, on, esc, applyTheme, dayKey, addDays, diffDays, weekStart, weekDays, fmtRange, fmtDate, isIosStandaloneEligible } from '../util.js';
 import * as store from '../store.js';
 import { VERSION, BUILD } from '../version.js';
 
@@ -55,6 +55,17 @@ export async function renderAyarlar(root) {
           </label>
           <button type="submit" class="btn-primary">Kaydet</button>
         </form>
+      </div>`;
+  }
+
+  function themeHtml() {
+    const cur = data.settings.theme === 'valorant' ? 'valorant' : 'fener';
+    const opt = (id, label) => `<button type="button" class="chip${cur === id ? ' selected' : ''}" data-theme-pick="${id}" aria-pressed="${cur === id}">${label}</button>`;
+    return `
+      <div class="card">
+        <h2>Tema</h2>
+        <p class="hint">Fener: defter kâğıdı ve kobalt. Valorant: koyu lacivert, kırmızı ve keskin köşeler.</p>
+        <div class="chip-row">${opt('fener', 'Fener')}${opt('valorant', 'Valorant')}</div>
       </div>`;
   }
 
@@ -161,9 +172,16 @@ export async function renderAyarlar(root) {
   function paint() {
     root.innerHTML = `
       <div class="greet"><h1>Ayarlar</h1></div>
-      ${installCardHtml()}${profileHtml()}${timesHtml()}${wallHtml()}${shareHtml()}${backupHtml()}${versionHtml()}${resetHtml()}
+      ${installCardHtml()}${profileHtml()}${themeHtml()}${timesHtml()}${wallHtml()}${shareHtml()}${backupHtml()}${versionHtml()}${resetHtml()}
     `;
   }
+
+  on(root, 'click', '[data-theme-pick]', async (e, btn) => {
+    const theme = btn.dataset.themePick;
+    await store.update(d => { d.settings.theme = theme; });
+    applyTheme(theme);
+    paint();
+  });
 
   on(root, 'submit', '[data-form="profile"]', async (e, form) => {
     e.preventDefault();

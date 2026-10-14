@@ -19,6 +19,7 @@ function defaultData() {
       schoolStart: '08:30', schoolEnd: '16:00',
       weeklyGoal: 3,
       reduceMotion: false,
+      theme: 'fener',
     },
     schedule: [],
     exams: [],
