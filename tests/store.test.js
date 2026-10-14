@@ -70,3 +70,9 @@ test('todayBucket: olmayan bir gün için boş kova oluşturur ve veriye ekler',
   assert.deepEqual(bucket.tasks, []);
   assert.equal(data.days['2026-09-23'], bucket);
 });
+
+test('eski yedek ödev alanı olmadan da yüklenir', async () => {
+  await store.importBackup({ app: 'fener', data: { schema: 1, profile: { name: 'A' } } });
+  const d = await store.getData();
+  assert.deepEqual(d.homework, []);
+});

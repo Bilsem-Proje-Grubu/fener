@@ -2,6 +2,8 @@ import { $, $$, on, esc, uid, dayKey, addDays, diffDays, fmtDate, fmtClock, fmtM
 import * as store from '../store.js';
 import { startFocus, startBreak, remaining, progress, extend, isDone, elapsedMinutes, chime, keepAwake, primeAudio } from '../timer.js';
 import { newQuestion } from '../spaced.js';
+import { reminders } from '../homework.js';
+import { confirmHomeworkDone } from '../confirm.js';
 
 const QUESTION_TEMPLATES = ['… nedir?', '… ile … farkı ne?', 'Şu formülü çıkar: …'];
 const DISTRACTIONS = ['Telefon', 'Yorgunluk', 'Konu zor', 'Başka'];
@@ -105,6 +107,21 @@ export async function renderToday(root) {
           </div>
           <div class="days">${days === 0 ? 'Bugün' : days + ' gün'}</div>
         </div>
+      </div>`;
+  }
+
+  function homeworkBannerHtml() {
+    const items = reminders(data.homework, today);
+    if (!items.length) return '';
+    const urgent = items.some(h => h.info.days <= 1);
+    return `
+      <div class="card card--warn hw-banner" role="alert">
+        <strong>${urgent ? 'Ödev teslimi çok yakın' : 'Ödev teslimi yaklaşıyor'}</strong>
+        <ul class="hw-banner-list">${items.map(h => `
+          <li>
+            <button type="button" class="task-check" data-action="hw-done" data-id="${esc(h.id)}" aria-label="${esc(h.title)} ödevini yaptım olarak işaretle" aria-pressed="false"></button>
+            <a class="hw-banner-name" href="#/hafta">${esc(h.title)} <span class="hw-badge hw-badge-${h.info.level}">${esc(h.info.label)}</span></a>
+          </li>`).join('')}</ul>
       </div>`;
   }
 
@@ -290,6 +307,7 @@ export async function renderToday(root) {
         <h1>${esc(greeting())}${data.profile.name ? ', ' + esc(data.profile.name) : ''}.</h1>
         ${goalLineHtml()}
       </div>
+      ${homeworkBannerHtml()}
       ${bannerHtml()}
       ${examCardHtml()}
       ${dueQuestionsHtml()}
@@ -493,6 +511,17 @@ export async function renderToday(root) {
     });
     showQuestionForm = false;
     window.fenerToast && window.fenerToast('İlk tekrar yarın.');
+    paint();
+  });
+
+  on(root, 'click', '[data-action="hw-done"]', async (e, t) => {
+    const h = data.homework.find(x => x.id === t.dataset.id);
+    if (!h || !(await confirmHomeworkDone(h.title))) return;
+    await store.update(d => {
+      const x = d.homework.find(y => y.id === t.dataset.id);
+      if (x) { x.done = true; x.doneAt = Date.now(); }
+    });
+    window.fenerToast && window.fenerToast('Ödev tamamlandı olarak işaretlendi.');
     paint();
   });
 

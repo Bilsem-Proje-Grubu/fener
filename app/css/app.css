@@ -596,3 +596,22 @@ form[data-form="dur"] { display: flex; align-items: center; flex-wrap: wrap; gap
 
 .form-warn { color: var(--danger-strong); font-size: var(--fs-sm); font-weight: var(--fw-semibold); }
 .form-warn p { margin: var(--sp-2) 0 0; }
+
+/* Ödev hatırlatıcısı */
+.hw-banner { display: block; color: inherit; text-decoration: none; }
+.hw-banner-list { list-style: none; margin: .4em 0 0; padding: 0; }
+.hw-banner-list li { padding: 2px 0; }
+.hw-title { font-weight: var(--fw-medium); overflow-wrap: anywhere; }
+.hw-badge { font-weight: var(--fw-bold); }
+.hw-badge-tomorrow, .hw-badge-today { color: var(--warn); }
+.hw-badge-late { color: var(--danger-strong); }
+.hw-edit { flex-wrap: wrap; }
+.task-item[class*="hw-"] { flex-wrap: wrap; }
+.task-item[class*="hw-"] > div:nth-of-type(1) { flex: 1 1 60%; }
+.hw-actions { flex: 1 1 100%; display: flex; justify-content: flex-end; gap: 4px; }
+
+.confirm-backdrop { position: fixed; inset: 0; z-index: 1000; display: flex; align-items: center; justify-content: center; padding: 16px; background: rgba(15, 22, 20, .55); }
+.confirm-box { width: 100%; max-width: 380px; background: var(--paper); border: 1px solid var(--line-strong); border-radius: var(--radius); padding: var(--sp-5, 20px); box-shadow: var(--elev-2); }
+.hw-banner-list li { display: flex; align-items: center; gap: 10px; padding: 6px 0; }
+.hw-banner-list .task-check { flex: none; }
+.hw-banner-list .hw-banner-name { flex: 1; min-width: 0; overflow-wrap: anywhere; }
