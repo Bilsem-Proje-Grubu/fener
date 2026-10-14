@@ -1,6 +1,7 @@
 import { $, on, esc, uid, dayKey, fmtDate } from '../util.js';
 import * as store from '../store.js';
 import { dueInfo, sortedOpen, reminders } from '../homework.js';
+import { confirmHomeworkDone } from '../confirm.js';
 import { notificationState, askNotificationPermission, notifyReminders } from '../notify.js';
 
 export async function renderOdev(root) {
@@ -62,11 +63,11 @@ export async function renderOdev(root) {
     root.innerHTML = `
       <div class="greet">
         <h1>Ödevler</h1>
-        <p class="hint">Ödevini ve teslim tarihini yaz. Fener, teslimden bir gün önce seni uyarır.</p>
+        <p class="hint">Ödevini ve teslim tarihini yaz. Fener, teslimden 7, 3 ve 1 gün önce seni uyarır; yaptığında kutucuğu işaretle.</p>
       </div>
       ${due.length ? `
         <div class="card card--warn" role="alert">
-          <strong>${due.some(h => h.info.level === 'tomorrow') ? 'Yarın teslim edeceğin ödev var' : 'Dikkat: teslim yaklaştı'}</strong>
+          <strong>${due.some(h => h.info.days === 1) ? 'Yarın teslim edeceğin ödev var' : 'Dikkat: teslim yaklaştı'}</strong>
           <div class="hint">${due.map(h => esc(h.title) + ' (' + esc(h.info.label.toLowerCase()) + ')').join(' · ')}</div>
         </div>` : ''}
       <div class="card">
@@ -127,6 +128,8 @@ export async function renderOdev(root) {
   on(root, 'click', '[data-action="toggle-done"]', () => { showDone = !showDone; paint(); });
 
   on(root, 'click', '[data-action="toggle-hw"]', async (e, t) => {
+    const cur = data.homework.find(x => x.id === t.dataset.id);
+    if (cur && !cur.done && !(await confirmHomeworkDone(cur.title))) return;
     await store.update(d => {
       const h = d.homework.find(x => x.id === t.dataset.id);
       if (h) { h.done = !h.done; h.doneAt = h.done ? Date.now() : null; }

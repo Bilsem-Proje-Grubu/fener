@@ -20,18 +20,24 @@ export function sortedOpen(list) {
   return openHomework(list).sort((a, b) => a.due < b.due ? -1 : a.due > b.due ? 1 : a.createdAt - b.createdAt);
 }
 
-/** Uyarı gerektirenler: yarın teslim (asıl hatırlatma), bugün teslim ve geciken. */
+/** Teslimden kaç gün kala hatırlatılır. Yapılmamış ödev teslim günü ve gecikince de uyarır. */
+export const REMIND_DAYS = [7, 3, 1];
+
+/** Uyarı gerektirenler: 7, 3 ve 1 gün kala, teslim günü ve geciken (yapılmamış) ödevler. */
 export function reminders(list, today) {
-  return sortedOpen(list).map(h => ({ ...h, info: dueInfo(h.due, today) })).filter(h => h.info.days <= 1);
+  return sortedOpen(list).map(h => ({ ...h, info: dueInfo(h.due, today) }))
+    .filter(h => h.info.days <= 0 || REMIND_DAYS.includes(h.info.days));
 }
 
 export function reminderText(items) {
-  const tomorrow = items.filter(h => h.info.level === 'tomorrow');
-  const today = items.filter(h => h.info.level === 'today');
-  const late = items.filter(h => h.info.level === 'late');
-  const parts = [];
-  if (tomorrow.length) parts.push(`Yarın teslim: ${tomorrow.map(h => h.title).join(', ')}`);
-  if (today.length) parts.push(`Bugün teslim: ${today.map(h => h.title).join(', ')}`);
-  if (late.length) parts.push(`Geciken: ${late.map(h => h.title).join(', ')}`);
-  return parts.join('. ');
+  const group = (test, head) => {
+    const g = items.filter(h => test(h.info));
+    return g.length ? `${head}: ${g.map(h => h.title).join(', ')}` : null;
+  };
+  return [
+    group(i => i.days === 1, 'Yarın teslim'),
+    group(i => i.days === 0, 'Bugün teslim'),
+    group(i => i.days === 3 || i.days === 7, '3-7 gün kala'),
+    group(i => i.days < 0, 'Geciken'),
+  ].filter(Boolean).join('. ');
 }

@@ -11,10 +11,16 @@ test('dueInfo: yarın, bugün, geciken ve uzak teslimler ayrılır', () => {
   assert.equal(dueInfo('2026-10-30', '2026-10-22').label, '8 gün kaldı');
 });
 
-test('reminders: 23 Ekim ödevi 22 Ekim günü uyarır, 21 Ekim günü uyarmaz', () => {
+test('reminders: 23 Ekim ödevi 7, 3 ve 1 gün kala uyarır, aradaki günlerde uyarmaz', () => {
   const list = [hw('Fizik', '2026-10-23')];
-  assert.equal(reminders(list, '2026-10-22').length, 1);
-  assert.equal(reminders(list, '2026-10-21').length, 0);
+  for (const d of ['2026-10-16', '2026-10-20', '2026-10-22']) assert.equal(reminders(list, d).length, 1, d);
+  for (const d of ['2026-10-15', '2026-10-17', '2026-10-19', '2026-10-21']) assert.equal(reminders(list, d).length, 0, d);
+});
+
+test('reminders: teslim günü ve gecikince yapılmamış ödev uyarmaya devam eder', () => {
+  const list = [hw('Fizik', '2026-10-23')];
+  assert.equal(reminders(list, '2026-10-23').length, 1);
+  assert.equal(reminders(list, '2026-10-25').length, 1);
 });
 
 test('reminders: teslim edilen ödev uyarmaz, sıralama tarihe göre', () => {
