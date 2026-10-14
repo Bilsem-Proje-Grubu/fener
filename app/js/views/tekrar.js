@@ -1,6 +1,6 @@
 import { $, on, esc, uid, dayKey, fmtDate, SUBJECTS } from '../util.js';
 import * as store from '../store.js';
-import { answer, isDue, newQuestion } from '../spaced.js';
+import { answer, isDue, newQuestion, isCorrect, hintFor, MAX_HINTS } from '../spaced.js';
 
 const QUESTION_TEMPLATES = ['… nedir?', '… ile … farkı ne?', 'Şu formülü çıkar: …'];
 
@@ -9,6 +9,9 @@ export async function renderTekrar(root) {
   const today = dayKey();
 
   let revealed = false;
+  let wrong = 0;
+  let solved = false;
+  let lastGiven = '';
   let showNewNote = false;
   let showQuestion = false;
 
@@ -23,6 +26,16 @@ export async function renderTekrar(root) {
         <p class="hint">Öğrendiğin bir şeyi ertesi gün büyük ölçüde unutursun; ama kısa bir hatırlama çabası bu eğriyi düzleştirir. Bu yüzden aynı soru 1, 7, 30 ve 90 gün sonra karşına çıkıyor.</p>
         <a class="btn-ghost" href="#/rehber?s=2">Devamı</a>
       </div>`;
+  }
+
+  function hintCardsHtml(note) {
+    const cards = [];
+    if (solved) cards.push('<p class="hint-ok">Doğru!</p>');
+    else if (revealed) cards.push('<p class="hint-miss">Üç ipucuna rağmen bulunamadı, cevap aşağıda.</p>');
+    for (let i = 1; i <= Math.min(wrong, MAX_HINTS); i++) {
+      cards.push(`<div class="hint-card hint-card--${i}"><span class="hint-card__title">İpucu ${i}/${MAX_HINTS}</span><p>${esc(hintFor(note, i))}</p></div>`);
+    }
+    return cards.join('');
   }
 
   function reviewCardHtml() {
@@ -45,14 +58,21 @@ export async function renderTekrar(root) {
         </div>
         <span class="tag">${esc(note.subject)}</span>
         <p class="qa-q">${esc(note.q)}</p>
-        ${revealed ? `<p class="qa-a">${esc(note.a)}</p>` : ''}
-        ${!revealed
-          ? `<button type="button" class="btn-primary btn-big" data-action="reveal">Cevabı göster</button>`
-          : `<div class="scale-row">
+        ${hintCardsHtml(note)}
+        ${revealed
+          ? `<p class="qa-a">${esc(note.a)}</p>
+            <div class="scale-row">
               <button type="button" class="btn-primary" data-action="answer" data-r="no">Hatırlamadım</button>
               <button type="button" class="btn-primary" data-action="answer" data-r="partial">Kısmen</button>
               <button type="button" class="btn-primary" data-action="answer" data-r="yes">Hatırladım</button>
-            </div>`}
+            </div>`
+          : `<form data-form="check" class="stack">
+              <input type="text" name="given" placeholder="Cevabını yaz" autocomplete="off" value="${esc(lastGiven)}">
+              <div class="row">
+                <button type="submit" class="btn-primary">Kontrol et</button>
+                <button type="button" class="btn-ghost" data-action="dont-know">Bilmiyorum</button>
+              </div>
+            </form>`}
       </div>`;
   }
 
@@ -113,7 +133,22 @@ export async function renderTekrar(root) {
     root.innerHTML = `${reviewCardHtml()}${newNoteHtml()}${notesListHtml()}`;
   }
 
-  on(root, 'click', '[data-action="reveal"]', () => { revealed = true; paint(); });
+  function miss() {
+    if (wrong >= MAX_HINTS) revealed = true; else wrong += 1;
+    lastGiven = '';
+    paint();
+  }
+
+  on(root, 'submit', '[data-form="check"]', (e, form) => {
+    e.preventDefault();
+    const note = dueNotes()[0];
+    if (!note) return;
+    const given = String(new FormData(form).get('given') || '').trim();
+    if (!given) return;
+    if (isCorrect(given, note.a)) { solved = true; revealed = true; paint(); } else miss();
+  });
+
+  on(root, 'click', '[data-action="dont-know"]', miss);
 
   on(root, 'click', '[data-action="answer"]', async (e, t) => {
     const note = dueNotes()[0];
@@ -123,7 +158,7 @@ export async function renderTekrar(root) {
       const idx = d.notes.findIndex(n => n.id === note.id);
       if (idx >= 0) d.notes[idx] = answer(d.notes[idx], result, today);
     });
-    revealed = false;
+    revealed = false; solved = false; wrong = 0; lastGiven = '';
     paint();
   });
 
