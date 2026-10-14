@@ -577,3 +577,5 @@ body.onboarding .rail, body.onboarding .tabs { display: none; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { transition-duration: 0ms !important; animation-duration: 0ms !important; scroll-behavior: auto !important; }
 }
+
+.dur-input { width: 3.2em; text-align: center; padding: 4px 6px; margin: 0 2px; display: inline-block; }
