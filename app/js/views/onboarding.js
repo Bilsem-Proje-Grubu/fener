@@ -14,9 +14,15 @@ export async function renderOnboarding(root, onDone, opts = {}) {
   let name = '';
   let customName = '';
   let durationIdx = 0;
+  let customFocus = '';
+  let customBrk = '';
   let mainDevice = true;
 
-  function canStart() { return !!(name || customName.trim()); }
+  function customDur() {
+    const f = Math.round(Number(customFocus)), b = Math.round(Number(customBrk));
+    return f >= 1 && f <= 180 && b >= 1 && b <= 60 ? { focus: f, brk: b } : null;
+  }
+  function canStart() { return !!(name || customName.trim()) && (durationIdx !== -1 || !!customDur()); }
 
   function paintInstallCard() {
     root.innerHTML = `
@@ -77,6 +83,11 @@ export async function renderOnboarding(root, onDone, opts = {}) {
               <button type="button" class="duration-card${i === durationIdx ? ' selected' : ''}" data-dur="${i}">
                 <span>${d.focus} / ${d.brk} dakika</span><strong>${i === durationIdx ? '✓' : ''}</strong>
               </button>`).join('')}
+            <div class="duration-card${durationIdx === -1 ? ' selected' : ''}" data-dur="-1" role="button" tabindex="0">
+              <span>Kendi süren:
+                <input type="text" inputmode="numeric" id="customFocus" class="dur-input" value="${esc(customFocus)}" placeholder="38" aria-label="Çalışma dakikası"> /
+                <input type="text" inputmode="numeric" id="customBrk" class="dur-input" value="${esc(customBrk)}" placeholder="7" aria-label="Mola dakikası"> dakika</span><strong>${durationIdx === -1 ? '✓' : ''}</strong>
+            </div>
           </div>
         </div>
         <div class="step">
@@ -107,12 +118,24 @@ export async function renderOnboarding(root, onDone, opts = {}) {
     const btn = $('#start', root);
     if (btn) btn.disabled = !canStart();
   });
-  on(root, 'click', '[data-dur]', (e, t) => { durationIdx = Number(t.dataset.dur); paint(); });
+  on(root, 'click', '[data-dur]', (e, t) => {
+    const idx = Number(t.dataset.dur);
+    if (idx === -1 && e.target.closest('input')) { if (durationIdx !== -1) { const id = e.target.id; durationIdx = -1; paint(); root.querySelector('#' + id)?.focus(); } return; }
+    durationIdx = idx; paint();
+  });
+  on(root, 'input', '.dur-input', (e, t) => {
+    const v = t.value.replace(/\D/g, '').slice(0, 3);
+    t.value = v;
+    if (t.id === 'customFocus') customFocus = v; else customBrk = v;
+    if (durationIdx !== -1) { const id = t.id; durationIdx = -1; paint(); root.querySelector('#' + id)?.focus(); return; }
+    const btn = $('#start', root);
+    if (btn) btn.disabled = !canStart();
+  });
   on(root, 'change', '#mainDevice', (e, t) => { mainDevice = t.checked; });
   on(root, 'click', '#start', async () => {
     if (!canStart()) return;
     const finalName = customName.trim() || name;
-    const d = DURATIONS[durationIdx];
+    const d = durationIdx === -1 ? customDur() : DURATIONS[durationIdx];
     await store.update(data => {
       data.profile.name = finalName;
       data.profile.mainDevice = mainDevice;

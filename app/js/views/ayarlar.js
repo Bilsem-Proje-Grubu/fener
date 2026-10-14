@@ -198,8 +198,9 @@ export async function renderAyarlar(root) {
   on(root, 'submit', '[data-form="times"]', async (e, form) => {
     e.preventDefault();
     const fd = new FormData(form);
-    const focusMinutes = Number(fd.get('focusMinutes')) || data.settings.focusMinutes;
-    const breakMinutes = Number(fd.get('breakMinutes')) || data.settings.breakMinutes;
+    const clamp = (v, max, fallback) => { const n = Math.round(Number(v)); return n >= 1 ? Math.min(n, max) : fallback; };
+    const focusMinutes = clamp(fd.get('focusMinutes'), 180, data.settings.focusMinutes);
+    const breakMinutes = clamp(fd.get('breakMinutes'), 60, data.settings.breakMinutes);
     await store.update(d => {
       d.settings.focusMinutes = focusMinutes;
       d.settings.breakMinutes = breakMinutes;
