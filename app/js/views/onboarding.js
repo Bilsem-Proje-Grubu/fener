@@ -22,7 +22,17 @@ export async function renderOnboarding(root, onDone, opts = {}) {
     const f = Math.round(Number(customFocus)), b = Math.round(Number(customBrk));
     return f >= 1 && f <= 180 && b >= 1 && b <= 60 ? { focus: f, brk: b } : null;
   }
-  function canStart() { return !!(name || customName.trim()) && (durationIdx !== -1 || !!customDur()); }
+  function missing() {
+    const m = [];
+    if (!(name || customName.trim())) m.push('İsim girmediniz, lütfen bir isim seçin ya da adınızı yazın.');
+    if (durationIdx === -1 && !customDur()) m.push('Kendi süreniz eksik ya da geçersiz, lütfen çalışma (1-180) ve mola (1-60) dakikasını girin.');
+    return m;
+  }
+  function canStart() { return missing().length === 0; }
+  function showWarn() {
+    const box = $('#startWarn', root);
+    if (box) box.innerHTML = missing().map(t => `<p>${esc(t)}</p>`).join('');
+  }
 
   function paintInstallCard() {
     root.innerHTML = `
@@ -97,7 +107,8 @@ export async function renderOnboarding(root, onDone, opts = {}) {
           </label>
           <p class="hint">Veriler şimdilik yalnızca bu cihazda tutulur.</p>
         </div>
-        <button type="button" class="btn-primary btn-big" id="start" ${canStart() ? '' : 'disabled'}>Başla</button>
+        <button type="button" class="btn-primary btn-big" id="start">Başla</button>
+        <div id="startWarn" class="form-warn" role="alert"></div>
       </div>`;
   }
 
@@ -115,8 +126,7 @@ export async function renderOnboarding(root, onDone, opts = {}) {
   on(root, 'input', '#customName', (e, t) => {
     customName = t.value;
     if (customName.trim()) name = '';
-    const btn = $('#start', root);
-    if (btn) btn.disabled = !canStart();
+    if ($('#startWarn', root)?.firstChild) showWarn();
   });
   on(root, 'click', '[data-dur]', (e, t) => {
     const idx = Number(t.dataset.dur);
@@ -128,12 +138,11 @@ export async function renderOnboarding(root, onDone, opts = {}) {
     t.value = v;
     if (t.id === 'customFocus') customFocus = v; else customBrk = v;
     if (durationIdx !== -1) { const id = t.id; durationIdx = -1; paint(); root.querySelector('#' + id)?.focus(); return; }
-    const btn = $('#start', root);
-    if (btn) btn.disabled = !canStart();
+    if ($('#startWarn', root)?.firstChild) showWarn();
   });
   on(root, 'change', '#mainDevice', (e, t) => { mainDevice = t.checked; });
   on(root, 'click', '#start', async () => {
-    if (!canStart()) return;
+    if (!canStart()) { showWarn(); return; }
     const finalName = customName.trim() || name;
     const d = durationIdx === -1 ? customDur() : DURATIONS[durationIdx];
     await store.update(data => {
