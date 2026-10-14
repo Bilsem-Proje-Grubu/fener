@@ -579,3 +579,12 @@ body.onboarding .rail, body.onboarding .tabs { display: none; }
 }
 
 .dur-input { width: 3.2em; text-align: center; padding: 4px 6px; margin: 0 2px; display: inline-block; }
+
+/* Tekrar: ipucu kartları — her kart bir öncekinden daha belirgin */
+.hint-card { border-left: 4px solid var(--line-strong); border-radius: var(--r-md, 10px); background: var(--cobalt-soft); padding: var(--sp-3) var(--sp-4); margin: 0 0 var(--sp-3); }
+.hint-card p { margin: .2em 0 0; }
+.hint-card__title { font-size: var(--fs-sm); font-weight: var(--fw-semibold); color: var(--ink-soft); }
+.hint-card--2 { border-left-color: var(--cobalt); }
+.hint-card--3 { border-left-color: var(--cobalt); border-left-width: 8px; font-weight: var(--fw-semibold); }
+.hint-ok, .hint-miss { margin: 0 0 var(--sp-3); font-weight: var(--fw-semibold); }
+.hint-miss { color: var(--ink-soft); }

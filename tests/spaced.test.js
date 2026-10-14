@@ -62,3 +62,21 @@ test('isDue: sırası gelmiş ve gelmemiş sorular doğru ayrılır', () => {
   assert.equal(isDue(q, addDays(TODAY, 1)), true);
   assert.equal(isDue(q, addDays(TODAY, 5)), true);
 });
+
+import { isCorrect, hintFor, MAX_HINTS } from '../app/js/spaced.js';
+
+test('isCorrect: büyük/küçük harf, noktalama ve tek harflik hatayı kabul eder', () => {
+  assert.equal(isCorrect('  ıŞık hızı ', 'Işık Hızı!'), true);
+  assert.equal(isCorrect('mitokondri', 'mitokondrl'), true);
+  assert.equal(isCorrect('kloroplast', 'mitokondri'), false);
+  assert.equal(isCorrect('', 'a'), false);
+  assert.equal(isCorrect('ab', 'ac'), false);
+});
+
+test('hintFor: üç ipucu giderek cevaba yaklaşır', () => {
+  const note = { a: 'Mitokondri', learned: 'Hücrenin enerji santrali' };
+  assert.equal(MAX_HINTS, 3);
+  assert.match(hintFor(note, 1), /1 kelime, 10 harf.*M/);
+  assert.match(hintFor(note, 2), /enerji santrali/);
+  assert.equal(hintFor(note, 3), 'M_t_k_n_r_');
+});
