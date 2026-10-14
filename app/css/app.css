@@ -593,3 +593,6 @@ body.onboarding .rail, body.onboarding .tabs { display: none; }
 input.dur-input { width: 4.2em; min-width: 0; flex: 0 0 auto; text-align: center; padding: 8px 6px; margin: 0 4px; display: inline-block; }
 .duration-card > span { display: flex; align-items: center; flex-wrap: wrap; gap: 4px; }
 form[data-form="dur"] { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
+
+.form-warn { color: var(--danger-strong); font-size: var(--fs-sm); font-weight: var(--fw-semibold); }
+.form-warn p { margin: var(--sp-2) 0 0; }
