@@ -12,6 +12,7 @@ export async function renderToday(root) {
 
   let finishing = false;
   let showAddForm = false;
+  let editingDur = false;
   let confirmFourth = null;
   let showQuestionForm = false;
   let selectedTaskText = '';
@@ -198,6 +199,14 @@ export async function renderToday(root) {
             ${tasks.filter(t => !t.done).map(t => `<option value="${esc(t.text)}" ${selectedTaskText === t.text ? 'selected' : ''}>${esc(t.text)}</option>`).join('')}
           </select>` : ''}
         <button type="button" class="btn-primary btn-big" data-action="start" style="margin-top:12px">Başla — ${data.settings.focusMinutes} dk</button>
+        ${editingDur ? `
+          <form data-form="dur" class="row" style="margin-top:10px;flex-wrap:wrap;gap:8px;align-items:center">
+            <span>Çalış</span><input type="text" inputmode="numeric" name="f" class="dur-input" value="${esc(data.settings.focusMinutes)}" aria-label="Çalışma dakikası">
+            <span>/ Mola</span><input type="text" inputmode="numeric" name="b" class="dur-input" value="${esc(data.settings.breakMinutes)}" aria-label="Mola dakikası">
+            <span>dk</span>
+            <button type="submit" class="btn-primary">Kaydet</button>
+            <button type="button" class="btn-ghost" data-action="dur-cancel">Vazgeç</button>
+          </form>` : `<button type="button" class="btn-ghost" data-action="dur-edit" style="margin-top:6px">Süreyi değiştir (${data.settings.focusMinutes} / ${data.settings.breakMinutes})</button>`}
       </div>`;
   }
 
@@ -394,6 +403,19 @@ export async function renderToday(root) {
     paint();
   });
 
+  on(root, 'click', '[data-action="dur-edit"]', () => { editingDur = true; paint(); });
+  on(root, 'click', '[data-action="dur-cancel"]', () => { editingDur = false; paint(); });
+  on(root, 'submit', '[data-form="dur"]', async (e, form) => {
+    e.preventDefault();
+    const fd = new FormData(form);
+    const clamp = (v, max, fb) => { const n = Math.round(Number(v)); return n >= 1 ? Math.min(n, max) : fb; };
+    await store.update(d => {
+      d.settings.focusMinutes = clamp(fd.get('f'), 180, d.settings.focusMinutes);
+      d.settings.breakMinutes = clamp(fd.get('b'), 60, d.settings.breakMinutes);
+    });
+    editingDur = false;
+    paint();
+  });
   on(root, 'click', '[data-action="show-add"]', () => { showAddForm = true; paint(); });
   on(root, 'click', '[data-action="cancel-add"]', () => { showAddForm = false; paint(); });
 
