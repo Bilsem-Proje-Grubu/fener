@@ -61,16 +61,14 @@ export async function renderOdev(root) {
     const done = (data.homework || []).filter(h => h.done).sort((a, b) => (b.doneAt || 0) - (a.doneAt || 0));
     const due = reminders(data.homework, today);
     root.innerHTML = `
-      <div class="greet">
-        <h1>Ödevler</h1>
-        <p class="hint">Ödevini ve teslim tarihini yaz. Fener, teslimden 7, 3 ve 1 gün önce seni uyarır; yaptığında kutucuğu işaretle.</p>
-      </div>
       ${due.length ? `
         <div class="card card--warn" role="alert">
           <strong>${due.some(h => h.info.days === 1) ? 'Yarın teslim edeceğin ödev var' : 'Dikkat: teslim yaklaştı'}</strong>
           <div class="hint">${due.map(h => esc(h.title) + ' (' + esc(h.info.label.toLowerCase()) + ')').join(' · ')}</div>
         </div>` : ''}
       <div class="card">
+        <h2>Ödev hatırlatıcısı</h2>
+        <p class="hint">Ödevini ve teslim tarihini yaz. Fener, teslimden 7, 3 ve 1 gün önce seni uyarır; yaptığında kutucuğu işaretle.</p>
         <form data-form="add-hw" class="stack">
           <label for="hwTitle">Ödev</label>
           <input id="hwTitle" type="text" name="title" maxlength="80" placeholder="Örn. Fizik problem seti" required autocomplete="off">

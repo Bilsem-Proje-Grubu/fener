@@ -1,5 +1,6 @@
 import { $, on, esc, uid, dayKey, diffDays, weekStart, weekDays, fmtRange, fmtDate, fmtMinutes, SUBJECTS } from '../util.js';
 import * as store from '../store.js';
+import { renderOdev } from './odev.js';
 
 const EXAM_TYPES = ['Yazılı', 'Ödev', 'Proje'];
 const STEPS = ['wish', 'outcome', 'obstacle', 'plan', 'goals'];
@@ -241,11 +242,16 @@ export async function renderHafta(root) {
     return `<div class="card"><h2>Geçmiş haftalar</h2><ul class="task-list">${rows}</ul></div>`;
   }
 
+  // Ödev hatırlatıcısı kendi olaylarını yönetir; paint() ile silinmesin diye tek kapsayıcı yeniden bağlanır.
+  const hwEl = document.createElement('div');
+  await renderOdev(hwEl);
+
   function paint() {
     const isWeekend = [5, 6].includes((new Date().getDay() + 6) % 7);
-    const blocks = [scheduleCardHtml(), examListHtml(), planWizardHtml(), reviewCardHtml()];
-    if (isWeekend) { const r = blocks.splice(3, 1)[0]; blocks.splice(2, 0, r); }
+    const blocks = [scheduleCardHtml(), '<div id="hwSlot"></div>', examListHtml(), planWizardHtml(), reviewCardHtml()];
+    if (isWeekend) { const r = blocks.splice(4, 1)[0]; blocks.splice(3, 0, r); }
     root.innerHTML = blocks.join('') + pastWeeksHtml();
+    $('#hwSlot', root).replaceWith(hwEl);
   }
 
   on(root, 'submit', '[data-form="school-hours"]', async (e, form) => {

@@ -120,7 +120,7 @@ export async function renderToday(root) {
         <ul class="hw-banner-list">${items.map(h => `
           <li>
             <button type="button" class="task-check" data-action="hw-done" data-id="${esc(h.id)}" aria-label="${esc(h.title)} ödevini yaptım olarak işaretle" aria-pressed="false"></button>
-            <a class="hw-banner-name" href="#/odev">${esc(h.title)} <span class="hw-badge hw-badge-${h.info.level}">${esc(h.info.label)}</span></a>
+            <a class="hw-banner-name" href="#/hafta">${esc(h.title)} <span class="hw-badge hw-badge-${h.info.level}">${esc(h.info.label)}</span></a>
           </li>`).join('')}</ul>
       </div>`;
   }
