@@ -1,7 +1,7 @@
 // Tanıtım turu ve "Fener nasıl çalışır" ekranının tek metin kaynağı.
 // Dil: kısa, düz, ikinci tekil, ünlemsiz.
 
-export const KNOWN_ROUTES = ['bugun', 'tekrar', 'hafta', 'rehber', 'ayarlar', 'nasil'];
+export const KNOWN_ROUTES = ['bugun', 'tekrar', 'hafta', 'rehber', 'ayarlar', 'nasil', 'yardim'];
 
 export const INTRO_CARDS = [
   {

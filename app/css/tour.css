@@ -56,3 +56,12 @@ body.onboarding .help-link { display: none; }
 .tl-meta { margin: 0; font-size: .82rem; color: var(--ink-soft); }
 .tl-where { color: var(--cobalt); font-weight: 600; }
 .tl-why { font-style: italic; }
+
+/* Yardım ekranı */
+.yardim-form label { display: block; margin-bottom: 6px; font-weight: 600; }
+.yardim-turn { margin-top: 16px; }
+.yardim-q { margin: 0 0 8px auto; max-width: 85%; width: fit-content; padding: 8px 14px; border-radius: 14px 14px 2px 14px; background: var(--cobalt-soft); color: var(--ink); }
+.yardim-answer h3 { margin: 0 0 .4em; }
+.yardim-answer p { margin: .4em 0 .8em; line-height: 1.55; }
+.yardim-answer + .yardim-answer { margin-top: 10px; }
+.yardim-answer a.btn-primary { display: inline-block; text-decoration: none; }

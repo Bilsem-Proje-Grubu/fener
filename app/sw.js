@@ -1,9 +1,9 @@
-const VERSION = '0.1.12';
+const VERSION = '0.1.13';
 const CACHE = `fener-${VERSION}`;
 const ASSETS = [
   './', './index.html', './manifest.webmanifest',
-  './css/app.css?v=0.1.12', './css/theme-valorant.css?v=0.1.12', './css/tokens.css', './css/tour.css?v=0.1.5', './js/app.js?v=0.1.12',
-  './js/version.js', './js/util.js', './js/store.js', './js/timer.js', './js/spaced.js', './js/guide-content.js', './js/howto-content.js', './js/howto-render.js', './js/views/nasil.js',
+  './css/app.css?v=0.1.13', './css/theme-valorant.css?v=0.1.13', './css/tokens.css', './css/tour.css?v=0.1.13', './js/app.js?v=0.1.13',
+  './js/version.js', './js/util.js', './js/store.js', './js/timer.js', './js/spaced.js', './js/guide-content.js', './js/howto-content.js', './js/howto-render.js', './js/views/nasil.js', './js/views/yardim.js', './js/yardim.js', './js/yardim-content.js',
   './js/views/onboarding.js', './js/views/today.js', './js/views/tekrar.js', './js/views/hafta.js',
   './js/views/rehber.js', './js/views/odev.js', './js/homework.js', './js/notify.js', './js/confirm.js', './js/views/ayarlar.js',
   './fonts/fonts.css',

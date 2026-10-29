@@ -12,7 +12,7 @@ Fen lisesi 9. sınıf öğrencisi için kanıta dayalı çalışma arkadaşı: g
 | `docs/03-ilk-surum-plani.md` | Plan modunda hazırlanan gözden geçirilmiş plan; FENER-PLAN.md'nin Bölüm B–C kaynağı. | Tamam |
 | `app/` | Uygulamanın kendisi. Düz HTML/CSS/JavaScript, kurulum ve derleme yok. | **Beş sekme de çalışıyor, yayın öncesi son işler kaldı** (aşağıya bakın) |
 
-## Uygulamanın durumu (29 Ekim 2026, sürüm 0.1.12)
+## Uygulamanın durumu (29 Ekim 2026, sürüm 0.1.13)
 
 Bitmiş olanlar:
 - `app/fonts/` — Fraunces ve Figtree yazı tipleri, Türkçe karakterli alt kümeyle, uygulama içinde (Google'a bağımlılık yok).
@@ -34,11 +34,13 @@ Bitmiş olanlar:
 - `app/_headers` — Cloudflare Pages önbellek ve güvenlik başlıkları.
 - `app/manifest.webmanifest` — açıklama, kapsam, kategori eklendi.
 - iPhone kurulum kartı: iOS Safari'de kurulu değilse ilk açılış sonunda ve Ayarlar'da "ana ekrana ekle" uyarısı (`isIosStandaloneEligible`, `app/js/util.js`).
-- `tests/` — `node --test` ile 36 test: tarih/hafta hesabı, sayaç (yenileme sonrası kalan süre dahil), tekrar aralığı, yedek doğrulama (bozuk/eksik yedek reddi, eski yedeğin yeni şemaya tamamlanması).
+- `tests/` — `node --test` ile 41 test: tarih/hafta hesabı, sayaç (yenileme sonrası kalan süre dahil), tekrar aralığı, yedek doğrulama (bozuk/eksik yedek reddi, eski yedeğin yeni şemaya tamamlanması).
 
 Son eklenenler (0.1.7–0.1.12): özel çalışma/mola süresi ve Bugün ekranında süreyi doğrudan değiştirme; Tekrar'da yanlış cevapta sırayla 3 ipucu kartı, sonra cevap; giriş ekranında eksik bilgi uyarısı; Hafta sekmesinde ödev hatırlatıcısı (7, 3 ve 1 gün kala uyarı, "yapıldı" kutucuğu).
 
-Beş sekme de tamam. Bilgisayarda ve telefon genişliğinde (390px), hem normal hem iPhone Safari kimliğiyle uçtan uca denendi: ilk açılış → Bugün → iş ekleme → sayaç başlatma → tam ekran odak → bitirme → üçlü ölçek → otomatik mola; Tekrar → yeni not/soru ekleme → sırası gelen kart → cevabı göster → hatırladım → aralık ilerlemesi; Hafta → sınav ekleme → plan sihirbazı → kaydet → haftayı değerlendir → kaydet → özeti panoya kopyala; Rehber → bölüm açma → okundu işaretleme → derin bağlantı; Ayarlar → ad/süre değiştirme → yedek indirme → yedek yükleme (veri doğru geri geldi) → sıfırlama başlat → geri al (veri silinmedi, doğrulandı); iPhone kimliğinde ilk açılış sonunda ve Ayarlar'da kurulum kartı doğru çıkıyor. Konsol hatası yok, `node --test` 36/36 geçiyor.
+Yardım (0.1.13): sağ üstteki "?" çevrimdışı bir yardımcıyı açar (`app/js/views/yardim.js`, `yardim.js`, `yardim-content.js`). Yapay zeka modeli ve sunucu yok; soru, Türkçe karakter ve ek farklarını tolere eden bir aramayla bilgi tabanındaki kayıtlara eşlenir, cevap ve ilgili ekrana giden düğme gösterilir. Yeni bir özellik eklendiğinde `yardim-content.js`'e kayıt eklenmeli.
+
+Beş sekme de tamam. Bilgisayarda ve telefon genişliğinde (390px), hem normal hem iPhone Safari kimliğiyle uçtan uca denendi: ilk açılış → Bugün → iş ekleme → sayaç başlatma → tam ekran odak → bitirme → üçlü ölçek → otomatik mola; Tekrar → yeni not/soru ekleme → sırası gelen kart → cevabı göster → hatırladım → aralık ilerlemesi; Hafta → sınav ekleme → plan sihirbazı → kaydet → haftayı değerlendir → kaydet → özeti panoya kopyala; Rehber → bölüm açma → okundu işaretleme → derin bağlantı; Ayarlar → ad/süre değiştirme → yedek indirme → yedek yükleme (veri doğru geri geldi) → sıfırlama başlat → geri al (veri silinmedi, doğrulandı); iPhone kimliğinde ilk açılış sonunda ve Ayarlar'da kurulum kartı doğru çıkıyor. Konsol hatası yok, `node --test` 41/41 geçiyor.
 
 Henüz yazılmamış, sıradaki iş: Uçtan uca deneme gerçek bir öğrenciyle, düzeltmeler, `v0.1` etiketi, Cloudflare Pages yayını (bkz. FENER-PLAN.md bölüm 10b, adım 8 ve bölüm 12).
 

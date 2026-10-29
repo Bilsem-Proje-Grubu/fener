@@ -16,7 +16,7 @@ export async function renderNasil(root) {
         <p>Açılıştaki üç kısa kartı tekrar görmek istersen.</p>
         <button type="button" class="btn-primary" data-action="replay">Tanıtımı aç</button>
       </div>
-      <p class="hint" style="margin-top:14px">Bilimsel arka planı merak ediyorsan <a href="#/rehber">Rehber</a>'e bak.</p>`;
+      <p class="hint" style="margin-top:14px">Bir yeri bulamadın mı? <a href="#/yardim">Yardım</a>'a sor. Bilimsel arka planı merak ediyorsan <a href="#/rehber">Rehber</a>'e bak.</p>`;
   }
 
   on(root, 'click', '[data-action="replay"]', () => {
