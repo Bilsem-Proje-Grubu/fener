@@ -65,3 +65,5 @@ body.onboarding .help-link { display: none; }
 .yardim-answer p { margin: .4em 0 .8em; line-height: 1.55; }
 .yardim-answer + .yardim-answer { margin-top: 10px; }
 .yardim-answer a.btn-primary { display: inline-block; text-decoration: none; }
+.yardim-ai-ask { margin: 8px 0 0; }
+.yardim-ai h3 { display: flex; align-items: center; gap: .4em; }
