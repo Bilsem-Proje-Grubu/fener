@@ -8,6 +8,7 @@ import { renderHafta } from './views/hafta.js';
 import { renderRehber } from './views/rehber.js';
 import { renderAyarlar } from './views/ayarlar.js';
 import { renderNasil } from './views/nasil.js';
+import { renderYardim } from './views/yardim.js';
 import { notifyReminders } from './notify.js';
 import { dayKey } from './util.js';
 
@@ -25,6 +26,7 @@ let destroyCurrent = null;
 // Menüde görünmeyen, ama adresle ve ? düğmesiyle açılan ekranlar.
 const HIDDEN_ROUTES = [
   { path: 'nasil', label: 'Fener nasıl çalışır', render: renderNasil },
+  { path: 'yardim', label: 'Yardım', render: renderYardim },
 ];
 
 function buildNav() {

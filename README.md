@@ -12,7 +12,7 @@ Fen lisesi 9. sınıf öğrencisi için kanıta dayalı çalışma arkadaşı: g
 | `docs/03-ilk-surum-plani.md` | Plan modunda hazırlanan gözden geçirilmiş plan; FENER-PLAN.md'nin Bölüm B–C kaynağı. | Tamam |
 | `app/` | Uygulamanın kendisi. Düz HTML/CSS/JavaScript, kurulum ve derleme yok. | **Beş sekme de çalışıyor, yayın öncesi son işler kaldı** (aşağıya bakın) |
 
-## Uygulamanın durumu (23 Eylül 2026)
+## Uygulamanın durumu (29 Ekim 2026, sürüm 0.1.14)
 
 Bitmiş olanlar:
 - `app/fonts/` — Fraunces ve Figtree yazı tipleri, Türkçe karakterli alt kümeyle, uygulama içinde (Google'a bağımlılık yok).
@@ -34,9 +34,15 @@ Bitmiş olanlar:
 - `app/_headers` — Cloudflare Pages önbellek ve güvenlik başlıkları.
 - `app/manifest.webmanifest` — açıklama, kapsam, kategori eklendi.
 - iPhone kurulum kartı: iOS Safari'de kurulu değilse ilk açılış sonunda ve Ayarlar'da "ana ekrana ekle" uyarısı (`isIosStandaloneEligible`, `app/js/util.js`).
-- `tests/` — `node --test` ile 24 test: tarih/hafta hesabı, sayaç (yenileme sonrası kalan süre dahil), tekrar aralığı, yedek doğrulama (bozuk/eksik yedek reddi, eski yedeğin yeni şemaya tamamlanması).
+- `tests/` — `node --test` ile 45 test: tarih/hafta hesabı, sayaç (yenileme sonrası kalan süre dahil), tekrar aralığı, yedek doğrulama (bozuk/eksik yedek reddi, eski yedeğin yeni şemaya tamamlanması).
 
-Beş sekme de tamam. Bilgisayarda ve telefon genişliğinde (390px), hem normal hem iPhone Safari kimliğiyle uçtan uca denendi: ilk açılış → Bugün → iş ekleme → sayaç başlatma → tam ekran odak → bitirme → üçlü ölçek → otomatik mola; Tekrar → yeni not/soru ekleme → sırası gelen kart → cevabı göster → hatırladım → aralık ilerlemesi; Hafta → sınav ekleme → plan sihirbazı → kaydet → haftayı değerlendir → kaydet → özeti panoya kopyala; Rehber → bölüm açma → okundu işaretleme → derin bağlantı; Ayarlar → ad/süre değiştirme → yedek indirme → yedek yükleme (veri doğru geri geldi) → sıfırlama başlat → geri al (veri silinmedi, doğrulandı); iPhone kimliğinde ilk açılış sonunda ve Ayarlar'da kurulum kartı doğru çıkıyor. Konsol hatası yok, `node --test` 24/24 geçiyor.
+Son eklenenler (0.1.7–0.1.12): özel çalışma/mola süresi ve Bugün ekranında süreyi doğrudan değiştirme; Tekrar'da yanlış cevapta sırayla 3 ipucu kartı, sonra cevap; giriş ekranında eksik bilgi uyarısı; Hafta sekmesinde ödev hatırlatıcısı (7, 3 ve 1 gün kala uyarı, "yapıldı" kutucuğu).
+
+Yardım (0.1.13): sağ üstteki "?" çevrimdışı bir yardımcıyı açar (`app/js/views/yardim.js`, `yardim.js`, `yardim-content.js`). Yapay zeka modeli ve sunucu yok; soru, Türkçe karakter ve ek farklarını tolere eden bir aramayla bilgi tabanındaki kayıtlara eşlenir, cevap ve ilgili ekrana giden düğme gösterilir. Yeni bir özellik eklendiğinde `yardim-content.js`'e kayıt eklenmeli.
+
+Yapay zeka (0.1.14): yerel arama yetmezse Yardım ekranında isteğe bağlı "Yapay zekaya sor" düğmesi çıkar. Soru yalnızca bu düğmeye basılınca `/api/ask` ucuna (`functions/api/ask.js`, Cloudflare Pages Function) gider; ucun Claude'a gönderdiği tek şey yazılan soru ve uygulama bilgi tabanıdır, Fener verisi gönderilmez. Anahtar tarayıcıya inmez. Anahtar tanımlı değilse düğme "henüz açık değil" der ve uygulama aynen çalışır.
+
+Beş sekme de tamam. Bilgisayarda ve telefon genişliğinde (390px), hem normal hem iPhone Safari kimliğiyle uçtan uca denendi: ilk açılış → Bugün → iş ekleme → sayaç başlatma → tam ekran odak → bitirme → üçlü ölçek → otomatik mola; Tekrar → yeni not/soru ekleme → sırası gelen kart → cevabı göster → hatırladım → aralık ilerlemesi; Hafta → sınav ekleme → plan sihirbazı → kaydet → haftayı değerlendir → kaydet → özeti panoya kopyala; Rehber → bölüm açma → okundu işaretleme → derin bağlantı; Ayarlar → ad/süre değiştirme → yedek indirme → yedek yükleme (veri doğru geri geldi) → sıfırlama başlat → geri al (veri silinmedi, doğrulandı); iPhone kimliğinde ilk açılış sonunda ve Ayarlar'da kurulum kartı doğru çıkıyor. Konsol hatası yok, `node --test` 45/45 geçiyor.
 
 Henüz yazılmamış, sıradaki iş: Uçtan uca deneme gerçek bir öğrenciyle, düzeltmeler, `v0.1` etiketi, Cloudflare Pages yayını (bkz. FENER-PLAN.md bölüm 10b, adım 8 ve bölüm 12).
 
@@ -63,9 +69,15 @@ node --test
 2. Build command: boş. Build output directory: `app`.
 3. `main` dalına her gönderim otomatik yayınlanır; diğer dallar kendi önizleme adresini alır (telefonda denemek için).
 
+### Yapay zekayı açmak
+
+1. Cloudflare Pages projesi → **Settings → Variables and Secrets** → `ANTHROPIC_API_KEY` adıyla (Secret olarak) anahtarı ekle, yeniden yayınla.
+2. Anthropic konsolunda bu anahtara **aylık harcama sınırı** koy. Uç, başka sitelerden gelen istekleri reddeder ama kullanım başına hız sınırı yoktur; sınırı koymak ücret sürprizini önler.
+3. Anahtarı kod deposuna ya da sohbete yazma.
+
 ## Değişmeyecek ilkeler
 
 - Puan, rozet, seri sayacı yok. Ceza yok. Öğrenci karar verir; uygulama önerir.
-- Hesap, sunucu, analitik yok; veri öğrencinin cihazında. Ürün sahibi kullanımı "haftalık özeti paylaş" metniyle görür.
+- Hesap ve analitik yok; veri öğrencinin cihazında. Tek istisna: öğrenci "Yapay zekaya sor"a basarsa yazdığı soru (başka hiçbir şey değil) `/api/ask` üzerinden gider. Ürün sahibi kullanımı "haftalık özeti paylaş" metniyle görür.
 - Her yeni özellik FENER-PLAN.md bölüm 2'deki kanıt sıralamasına dayanmalı.
 - Arayüz dili: kısa, düz, ikinci tekil, ünlemsiz.
