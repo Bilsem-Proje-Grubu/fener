@@ -1,9 +1,11 @@
-// "Yapay zekaya sor" ucu (Cloudflare Pages Function). Tarayıcı anahtarı görmez:
+// "Yapay zekaya sor" ucu (Cloudflare Pages Function). Sağlayıcı önceliği: ANTHROPIC_API_KEY (Claude), yoksa Workers AI bağlaması (AI). Tarayıcı anahtarı görmez:
 // ANTHROPIC_API_KEY, Cloudflare Pages > Settings > Variables and Secrets altında tutulur.
 // Yalnızca öğrencinin yazdığı soru gelir; Fener verisi (ad, not, ödev) hiç gönderilmez.
 import { ENTRIES } from '../../app/js/yardim-content.js';
 
 const MODEL = 'claude-haiku-5-5';
+// Anahtar yoksa Cloudflare'ın kendi modeli (Workers AI bağlaması: AI) yedek olarak kullanılır.
+const CF_MODEL = '@cf/meta/llama-3.1-8b-instruct';
 const MAX_Q = 300;
 const ROUTES = ['bugun', 'tekrar', 'hafta', 'rehber', 'ayarlar', 'nasil', 'yardim'];
 
@@ -39,25 +41,32 @@ export async function handleAsk(request, env, fetchImpl = fetch) {
   // Başka sitelerin bu ucu kullanmasını engelle.
   const origin = request.headers.get('Origin');
   if (origin && new URL(origin).host !== new URL(request.url).host) return json({ error: 'origin' }, 403);
-  if (!env || !env.ANTHROPIC_API_KEY) return json({ error: 'not_configured' }, 503);
+  if (!env || (!env.ANTHROPIC_API_KEY && !env.AI)) return json({ error: 'not_configured' }, 503);
 
   let q;
   try { q = String((await request.json()).q || '').trim(); } catch { return json({ error: 'bad_request' }, 400); }
   if (!q) return json({ error: 'empty' }, 400);
   if (q.length > MAX_Q) q = q.slice(0, MAX_Q);
 
-  let res;
-  try {
-    res = await fetchImpl('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: { 'x-api-key': env.ANTHROPIC_API_KEY, 'anthropic-version': '2023-06-01', 'content-type': 'application/json' },
-      body: JSON.stringify({ model: MODEL, max_tokens: 400, system: systemPrompt(), messages: [{ role: 'user', content: q }] }),
-    });
-  } catch { return json({ error: 'upstream' }, 502); }
-  if (!res.ok) return json({ error: 'upstream' }, 502);
-
-  const data = await res.json().catch(() => null);
-  const text = data && Array.isArray(data.content) ? data.content.filter(b => b.type === 'text').map(b => b.text).join('') : '';
+  let text = '';
+  if (env.ANTHROPIC_API_KEY) {
+    let res;
+    try {
+      res = await fetchImpl('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: { 'x-api-key': env.ANTHROPIC_API_KEY, 'anthropic-version': '2023-06-01', 'content-type': 'application/json' },
+        body: JSON.stringify({ model: MODEL, max_tokens: 400, system: systemPrompt(), messages: [{ role: 'user', content: q }] }),
+      });
+    } catch { return json({ error: 'upstream' }, 502); }
+    if (!res.ok) return json({ error: 'upstream' }, 502);
+    const data = await res.json().catch(() => null);
+    text = data && Array.isArray(data.content) ? data.content.filter(b => b.type === 'text').map(b => b.text).join('') : '';
+  } else {
+    try {
+      const out = await env.AI.run(CF_MODEL, { max_tokens: 400, messages: [{ role: 'system', content: systemPrompt() }, { role: 'user', content: q }] });
+      text = out && typeof out.response === 'string' ? out.response : '';
+    } catch { return json({ error: 'upstream' }, 502); }
+  }
   const out = parseAnswer(text);
   if (!out.answer) return json({ error: 'upstream' }, 502);
   return json(out);
