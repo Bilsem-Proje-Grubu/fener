@@ -34,7 +34,7 @@ Bitmiş olanlar:
 - `app/_headers` — Cloudflare Pages önbellek ve güvenlik başlıkları.
 - `app/manifest.webmanifest` — açıklama, kapsam, kategori eklendi.
 - iPhone kurulum kartı: iOS Safari'de kurulu değilse ilk açılış sonunda ve Ayarlar'da "ana ekrana ekle" uyarısı (`isIosStandaloneEligible`, `app/js/util.js`).
-- `tests/` — `node --test` ile 45 test: tarih/hafta hesabı, sayaç (yenileme sonrası kalan süre dahil), tekrar aralığı, yedek doğrulama (bozuk/eksik yedek reddi, eski yedeğin yeni şemaya tamamlanması).
+- `tests/` — `node --test` ile 46 test: tarih/hafta hesabı, sayaç (yenileme sonrası kalan süre dahil), tekrar aralığı, yedek doğrulama (bozuk/eksik yedek reddi, eski yedeğin yeni şemaya tamamlanması).
 
 Son eklenenler (0.1.7–0.1.12): özel çalışma/mola süresi ve Bugün ekranında süreyi doğrudan değiştirme; Tekrar'da yanlış cevapta sırayla 3 ipucu kartı, sonra cevap; giriş ekranında eksik bilgi uyarısı; Hafta sekmesinde ödev hatırlatıcısı (7, 3 ve 1 gün kala uyarı, "yapıldı" kutucuğu).
 
@@ -42,7 +42,7 @@ Yardım (0.1.13): sağ üstteki "?" çevrimdışı bir yardımcıyı açar (`app
 
 Yapay zeka (0.1.14): yerel arama yetmezse Yardım ekranında isteğe bağlı "Yapay zekaya sor" düğmesi çıkar. Soru yalnızca bu düğmeye basılınca `/api/ask` ucuna (`functions/api/ask.js`, Cloudflare Pages Function) gider; ucun Claude'a gönderdiği tek şey yazılan soru ve uygulama bilgi tabanıdır, Fener verisi gönderilmez. Anahtar tarayıcıya inmez. Anahtar tanımlı değilse düğme "henüz açık değil" der ve uygulama aynen çalışır.
 
-Beş sekme de tamam. Bilgisayarda ve telefon genişliğinde (390px), hem normal hem iPhone Safari kimliğiyle uçtan uca denendi: ilk açılış → Bugün → iş ekleme → sayaç başlatma → tam ekran odak → bitirme → üçlü ölçek → otomatik mola; Tekrar → yeni not/soru ekleme → sırası gelen kart → cevabı göster → hatırladım → aralık ilerlemesi; Hafta → sınav ekleme → plan sihirbazı → kaydet → haftayı değerlendir → kaydet → özeti panoya kopyala; Rehber → bölüm açma → okundu işaretleme → derin bağlantı; Ayarlar → ad/süre değiştirme → yedek indirme → yedek yükleme (veri doğru geri geldi) → sıfırlama başlat → geri al (veri silinmedi, doğrulandı); iPhone kimliğinde ilk açılış sonunda ve Ayarlar'da kurulum kartı doğru çıkıyor. Konsol hatası yok, `node --test` 45/45 geçiyor.
+Beş sekme de tamam. Bilgisayarda ve telefon genişliğinde (390px), hem normal hem iPhone Safari kimliğiyle uçtan uca denendi: ilk açılış → Bugün → iş ekleme → sayaç başlatma → tam ekran odak → bitirme → üçlü ölçek → otomatik mola; Tekrar → yeni not/soru ekleme → sırası gelen kart → cevabı göster → hatırladım → aralık ilerlemesi; Hafta → sınav ekleme → plan sihirbazı → kaydet → haftayı değerlendir → kaydet → özeti panoya kopyala; Rehber → bölüm açma → okundu işaretleme → derin bağlantı; Ayarlar → ad/süre değiştirme → yedek indirme → yedek yükleme (veri doğru geri geldi) → sıfırlama başlat → geri al (veri silinmedi, doğrulandı); iPhone kimliğinde ilk açılış sonunda ve Ayarlar'da kurulum kartı doğru çıkıyor. Konsol hatası yok, `node --test` 46/46 geçiyor.
 
 Henüz yazılmamış, sıradaki iş: Uçtan uca deneme gerçek bir öğrenciyle, düzeltmeler, `v0.1` etiketi, Cloudflare Pages yayını (bkz. FENER-PLAN.md bölüm 10b, adım 8 ve bölüm 12).
 
@@ -70,6 +70,10 @@ node --test
 3. `main` dalına her gönderim otomatik yayınlanır; diğer dallar kendi önizleme adresini alır (telefonda denemek için).
 
 ### Yapay zekayı açmak
+
+**Kolay yol (anahtarsız): Cloudflare Workers AI.** Pages projesi → **Settings → Bindings → Add → Workers AI**; değişken adı `AI`. Kaydet, **Deployments**'tan yeniden yayınla. Ücretsiz günlük kotası vardır; Anthropic hesabı ya da kart gerekmez. Türkçe kalitesi Claude'dan düşüktür. Hem `AI` bağlaması hem de `ANTHROPIC_API_KEY` varsa Claude kullanılır.
+
+**Claude ile:**
 
 1. Cloudflare Pages projesi → **Settings → Variables and Secrets** → `ANTHROPIC_API_KEY` adıyla (Secret olarak) anahtarı ekle, yeniden yayınla.
 2. Anthropic konsolunda bu anahtara **aylık harcama sınırı** koy. Uç, başka sitelerden gelen istekleri reddeder ama kullanım başına hız sınırı yoktur; sınırı koymak ücret sürprizini önler.

@@ -36,3 +36,16 @@ test('üst servis hatası 502; sistem istemi bilgi tabanını içerir', async ()
   assert.equal((await handleAsk(req({ q: 'x' }), { ANTHROPIC_API_KEY: 'k' }, bad)).status, 502);
   assert.match(systemPrompt(), /Ödev ekleme ve hatırlatma/);
 });
+
+test('anahtar yoksa Workers AI bağlaması kullanılır; ikisi de yoksa 503, bağlama hata verirse 502', async () => {
+  let got;
+  const AI = { run: async (model, input) => { got = { model, input }; return { response: 'Yedek cevap. [[git:#/tekrar]]' }; } };
+  const res = await handleAsk(req({ q: 'tekrar nerede' }), { AI });
+  assert.equal(res.status, 200);
+  assert.deepEqual(await res.json(), { answer: 'Yedek cevap.', route: '#/tekrar' });
+  assert.match(got.model, /^@cf\//);
+  assert.equal(got.input.messages[1].content, 'tekrar nerede');
+  assert.equal((await handleAsk(req({ q: 'x' }), {})).status, 503);
+  const bad = { run: async () => { throw new Error('x'); } };
+  assert.equal((await handleAsk(req({ q: 'x' }), { AI: bad })).status, 502);
+});
