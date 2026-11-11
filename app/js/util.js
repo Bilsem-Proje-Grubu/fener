@@ -144,8 +144,16 @@ export const SUBJECTS = [
 ];
 
 /** Temayı <html data-skin> olarak uygular; 'fener' varsayılan, öznitelik yok. */
+export const THEMES = [
+  { id: 'fener', label: 'Fener', hint: 'defter kâğıdı ve kobalt' },
+  { id: 'gece', label: 'Gece', hint: 'koyu mor-lacivert, yumuşak mor vurgu' },
+  { id: 'orman', label: 'Orman', hint: 'koyu yeşil, sakin ve doğal' },
+  { id: 'gunbatimi', label: 'Gün batımı', hint: 'sıcak krem zemin, turuncu vurgu' },
+  { id: 'okyanus', label: 'Okyanus', hint: 'koyu petrol mavisi, turkuaz vurgu' },
+  { id: 'valorant', label: 'Valorant', hint: 'koyu lacivert, kırmızı, keskin köşeler' },
+];
 export function applyTheme(theme) {
   const root = document.documentElement;
-  if (theme === 'valorant') root.setAttribute('data-skin', 'valorant');
+  if (THEMES.some(t => t.id === theme && t.id !== 'fener')) root.setAttribute('data-skin', theme);
   else root.removeAttribute('data-skin');
 }

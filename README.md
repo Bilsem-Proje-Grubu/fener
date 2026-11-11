@@ -12,7 +12,7 @@ Fen lisesi 9. sınıf öğrencisi için kanıta dayalı çalışma arkadaşı: g
 | `docs/03-ilk-surum-plani.md` | Plan modunda hazırlanan gözden geçirilmiş plan; FENER-PLAN.md'nin Bölüm B–C kaynağı. | Tamam |
 | `app/` | Uygulamanın kendisi. Düz HTML/CSS/JavaScript, kurulum ve derleme yok. | **Beş sekme de çalışıyor, yayın öncesi son işler kaldı** (aşağıya bakın) |
 
-## Uygulamanın durumu (11 Kasım 2026, sürüm 0.1.15)
+## Uygulamanın durumu (11 Kasım 2026, sürüm 0.1.16)
 
 Bitmiş olanlar:
 - `app/fonts/` — Fraunces ve Figtree yazı tipleri, Türkçe karakterli alt kümeyle, uygulama içinde (Google'a bağımlılık yok).
@@ -41,6 +41,8 @@ Son eklenenler (0.1.7–0.1.12): özel çalışma/mola süresi ve Bugün ekranı
 Yardım (0.1.13): sağ üstteki "?" çevrimdışı bir yardımcıyı açar (`app/js/views/yardim.js`, `yardim.js`, `yardim-content.js`). Yapay zeka modeli ve sunucu yok; soru, Türkçe karakter ve ek farklarını tolere eden bir aramayla bilgi tabanındaki kayıtlara eşlenir, cevap ve ilgili ekrana giden düğme gösterilir. Yeni bir özellik eklendiğinde `yardim-content.js`'e kayıt eklenmeli.
 
 Süre alarmı (0.1.15): odak ya da mola bitince ses çalar, telefon titrer, başlık yanıp söner; uygulama arka plandaysa (izin varsa) bildirim düşer. Ekrana dokunmak alarmı susturur, en çok 40 sn çalar. Ayarlar > "Süre alarmı"ndan kapatılır, "Alarmı dene" düğmesi vardır. Sunucu olmadığından uygulama tamamen kapalıyken alarm çalamaz (`app/js/alarm.js`).
+
+Temalar (0.1.16): Ayarlar > Tema'da Fener, Gece, Orman, Gün batımı, Okyanus ve Valorant. Ek temalar yalnızca renk tokenlarını geçersiz kılar (`app/css/themes.css`, `<html data-skin>`); yeni tema için `THEMES` listesine (`app/js/util.js`), `themes.css`'e ve `index.html`'deki ilk-boyama betiğine eklenir.
 
 Yapay zeka (0.1.14): yerel arama yetmezse Yardım ekranında isteğe bağlı "Yapay zekaya sor" düğmesi çıkar. Soru yalnızca bu düğmeye basılınca `/api/ask` ucuna (`functions/api/ask.js`, Cloudflare Pages Function) gider; ucun Claude'a gönderdiği tek şey yazılan soru ve uygulama bilgi tabanıdır, Fener verisi gönderilmez. Anahtar tarayıcıya inmez. Anahtar tanımlı değilse düğme "henüz açık değil" der ve uygulama aynen çalışır.
 

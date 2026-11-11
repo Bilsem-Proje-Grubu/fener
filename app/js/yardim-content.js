@@ -175,8 +175,8 @@ export const ENTRIES = [
   {
     id: 'tema',
     title: 'Tema ve görünüm',
-    keywords: ['tema', 'renk', 'karanlik', 'koyu', 'acik tema', 'gorunum', 'valorant', 'dark mode', 'gece modu', 'tasarim'],
-    answer: 'Ayarlar ekranında "Tema" kartında Fener ve Valorant temalarından birini seçebilirsin. Açık ya da koyu görünüm cihazının ayarını izler.',
+    keywords: ['tema', 'renk', 'karanlik', 'koyu', 'acik tema', 'gorunum', 'valorant', 'dark mode', 'gece modu', 'tasarim', 'arka plan', 'arkaplan', 'orman', 'okyanus', 'gun batimi'],
+    answer: 'Ayarlar ekranında "Tema" kartında Fener, Gece, Orman, Gün batımı, Okyanus ve Valorant temalarından birini seçebilirsin; arka plan ve renkler değişir. Fener teması açık ya da koyu görünümü cihazının ayarından alır, diğerleri sabittir (Gün batımı açık, ötekiler koyu).',
     route: '#/ayarlar', label: 'Ayarlara git',
   },
   {

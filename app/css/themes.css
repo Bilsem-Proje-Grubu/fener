@@ -1,0 +1,71 @@
+/* ==========================================================================
+   Ek temalar — <html data-skin="gece|orman|gunbatimi|okyanus">
+   Yalnızca renk tokenlarını geçersiz kılar; bileşenler ve şekiller aynı kalır.
+   Koyu temalar sistem tercihinden bağımsız koyudur; Gün batımı açıktır.
+   ========================================================================== */
+
+html:root[data-skin="gece"] {
+  color-scheme: dark;
+  --bg: #14111F; --grid: #191528; --grid-major: #201B33;
+  --paper: #1C1829; --paper-2: #231E33;
+  --line: #352E4D; --line-strong: #8A82A6; --margin: #A78BFA;
+  --ink: #EDE9F7; --ink-soft: #B9B2D0; --ink-faint: #9C94B8;
+  --cobalt: #A78BFA; --cobalt-strong: #C4B0FF; --cobalt-deep: #6D4FD0; --cobalt-soft: #2A2147; --cobalt-ink: #14111F;
+  --yellow: #F5C26B; --yellow-ink: #14111F;
+  --hl: #F5C26B8c; --hl-soft: #F5C26B1f;
+  --good: #5EE0B0; --good-soft: #10302A;
+  --fill: #3A2D70; --fill-edge: #A78BFA;
+  --tick: #EDE9F752;
+}
+
+html:root[data-skin="orman"] {
+  color-scheme: dark;
+  --bg: #0F1A14; --grid: #132019; --grid-major: #192A20;
+  --paper: #15221A; --paper-2: #1B2B21;
+  --line: #2C4234; --line-strong: #7E9A88; --margin: #6FCF8E;
+  --ink: #E8F0E9; --ink-soft: #AFC2B5; --ink-faint: #93A99A;
+  --cobalt: #6FCF8E; --cobalt-strong: #94E0AB; --cobalt-deep: #2E8A52; --cobalt-soft: #17301F; --cobalt-ink: #0F1A14;
+  --yellow: #E8C766; --yellow-ink: #0F1A14;
+  --hl: #E8C7668c; --hl-soft: #E8C7661f;
+  --good: #6FCF8E; --good-soft: #17301F;
+  --fill: #1F5A36; --fill-edge: #6FCF8E;
+  --tick: #E8F0E952;
+}
+
+html:root[data-skin="gunbatimi"] {
+  color-scheme: light;
+  --bg: #FBF3E8; --grid: #F6EBDB; --grid-major: #F0E1CB;
+  --paper: #FFFBF4; --paper-2: #FDF3E3;
+  --line: #E6D3B8; --line-strong: #8A7255; --margin: #E4572E;
+  --ink: #2B2118; --ink-soft: #5E4D3C; --ink-faint: #7A6850;
+  --cobalt: #D9480F; --cobalt-strong: #B83A08; --cobalt-deep: #8F2D05; --cobalt-soft: #FFE6D5; --cobalt-ink: #FFFFFF;
+  --yellow: #FFC857; --yellow-ink: #2B2118;
+  --hl: #FFC8578c; --hl-soft: #FFC8571f;
+  --good: #2F8F5B; --good-soft: #DDF2E5;
+  --fill: #FFD9BF; --fill-edge: #E4572E;
+  --tick: #2B211852;
+}
+
+html:root[data-skin="okyanus"] {
+  color-scheme: dark;
+  --bg: #0B1A22; --grid: #0F212B; --grid-major: #142B37;
+  --paper: #112530; --paper-2: #173040;
+  --line: #25465A; --line-strong: #7396A8; --margin: #2EC4B6;
+  --ink: #E6F2F5; --ink-soft: #A9C4CE; --ink-faint: #8CABB6;
+  --cobalt: #2EC4B6; --cobalt-strong: #6EE0D4; --cobalt-deep: #17887E; --cobalt-soft: #10333A; --cobalt-ink: #0B1A22;
+  --yellow: #F2C14E; --yellow-ink: #0B1A22;
+  --hl: #F2C14E8c; --hl-soft: #F2C14E1f;
+  --good: #2EC4B6; --good-soft: #10333A;
+  --fill: #145A63; --fill-edge: #2EC4B6;
+  --tick: #E6F2F552;
+}
+
+/* Uyarı renkleri: sistem açık/koyu tercihinden bağımsız, temaya göre sabit */
+html:root[data-skin="gece"], html:root[data-skin="orman"], html:root[data-skin="okyanus"] {
+  --warn: #FFB547; --warn-soft: #33260F;
+  --danger: #FF8A8A; --danger-strong: #FFADAD; --danger-ink: #14111F; --danger-soft: #3A1A22;
+}
+html:root[data-skin="gunbatimi"] {
+  --warn: #B45F06; --warn-soft: #FFEBC8;
+  --danger: #C62828; --danger-strong: #9B1C1C; --danger-ink: #FFFFFF; --danger-soft: #FCDCDC;
+}

@@ -1,4 +1,4 @@
-import { $, on, esc, applyTheme, dayKey, addDays, diffDays, weekStart, weekDays, fmtRange, fmtDate, isIosStandaloneEligible } from '../util.js';
+import { $, on, esc, applyTheme, THEMES, dayKey, addDays, diffDays, weekStart, weekDays, fmtRange, fmtDate, isIosStandaloneEligible } from '../util.js';
 import * as store from '../store.js';
 import { VERSION, BUILD } from '../version.js';
 import { notificationState, askNotificationPermission } from '../notify.js';
@@ -61,13 +61,14 @@ export async function renderAyarlar(root) {
   }
 
   function themeHtml() {
-    const cur = data.settings.theme === 'valorant' ? 'valorant' : 'fener';
-    const opt = (id, label) => `<button type="button" class="chip${cur === id ? ' selected' : ''}" data-theme-pick="${id}" aria-pressed="${cur === id}">${label}</button>`;
+    const cur = THEMES.some(t => t.id === data.settings.theme) ? data.settings.theme : 'fener';
+    const opt = t => `<button type="button" class="chip${cur === t.id ? ' selected' : ''}" data-theme-pick="${t.id}" aria-pressed="${cur === t.id}">${esc(t.label)}</button>`;
+    const hint = THEMES.find(t => t.id === cur).hint;
     return `
       <div class="card">
         <h2>Tema</h2>
-        <p class="hint">Fener: defter kâğıdı ve kobalt. Valorant: koyu lacivert, kırmızı ve keskin köşeler.</p>
-        <div class="chip-row">${opt('fener', 'Fener')}${opt('valorant', 'Valorant')}</div>
+        <p class="hint">Arka plan ve renkler. Şu an: ${esc(hint)}.</p>
+        <div class="chip-row">${THEMES.map(opt).join('')}</div>
       </div>`;
   }
 
