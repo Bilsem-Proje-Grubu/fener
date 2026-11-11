@@ -10,6 +10,7 @@ import { renderAyarlar } from './views/ayarlar.js';
 import { renderNasil } from './views/nasil.js';
 import { renderYardim } from './views/yardim.js';
 import { notifyReminders } from './notify.js';
+import { watchTimer } from './alarm.js';
 import { dayKey } from './util.js';
 
 const ROUTES = [
@@ -102,6 +103,8 @@ async function checkReminders() {
 }
 document.addEventListener('visibilitychange', () => { if (!document.hidden) checkReminders(); });
 checkReminders();
+
+store.isOnboarded().then(ok => { if (ok) watchTimer(() => store.getData(), showToast); });
 
 buildNav();
 window.addEventListener('hashchange', route);

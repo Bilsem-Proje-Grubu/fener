@@ -1,6 +1,6 @@
 import { $, $$, on, esc, uid, dayKey, addDays, diffDays, fmtDate, fmtClock, fmtMinutes, minutesNow, parseHM, DAY_START_HOUR, SUBJECTS } from '../util.js';
 import * as store from '../store.js';
-import { startFocus, startBreak, remaining, progress, extend, isDone, elapsedMinutes, chime, keepAwake, primeAudio } from '../timer.js';
+import { startFocus, startBreak, remaining, progress, extend, isDone, elapsedMinutes, keepAwake, primeAudio } from '../timer.js';
 import { newQuestion } from '../spaced.js';
 import { reminders } from '../homework.js';
 import { confirmHomeworkDone } from '../confirm.js';
@@ -391,7 +391,6 @@ export async function renderToday(root) {
     const t = data.timer;
     const endedAt = Date.now();
     const minutes = elapsedMinutes(t, endedAt);
-    chime('focus');
     await keepAwake(false);
     let count = 0;
     await store.update(d => {

@@ -1,6 +1,8 @@
 import { $, on, esc, applyTheme, dayKey, addDays, diffDays, weekStart, weekDays, fmtRange, fmtDate, isIosStandaloneEligible } from '../util.js';
 import * as store from '../store.js';
 import { VERSION, BUILD } from '../version.js';
+import { notificationState, askNotificationPermission } from '../notify.js';
+import { startAlarm, stopAlarm } from '../alarm.js';
 
 export async function renderAyarlar(root) {
   const data = await store.getData();
@@ -89,6 +91,26 @@ export async function renderAyarlar(root) {
       </div>`;
   }
 
+  function alarmHtml() {
+    const on = data.settings.alarm !== false;
+    const st = notificationState();
+    const note = st === 'granted' ? 'Bildirim açık: uygulama arka plandayken süre bitince bildirim düşer.'
+      : st === 'denied' ? 'Bildirim tarayıcıdan kapatılmış. Alarm sesi yine çalar.'
+      : st === 'unsupported' ? 'Bu tarayıcı bildirimleri desteklemiyor. Alarm sesi yine çalar.'
+      : 'Bildirimi açarsan, uygulama arka plandayken de haber verir.';
+    return `
+      <div class="card">
+        <h2>Süre alarmı</h2>
+        <p class="hint">Odak ya da mola süresi bitince ses çalar, telefon titrer. Ekrana dokununca susar.</p>
+        <label class="row" style="gap:8px;align-items:center"><input type="checkbox" data-action="toggle-alarm" ${on ? 'checked' : ''}> Süre bitince alarm çal</label>
+        <p class="hint">${note} Fener bir sunucuya bağlı değil; uygulama tamamen kapalıysa alarm çalamaz.</p>
+        <div class="row" style="flex-wrap:wrap;gap:8px">
+          ${st === 'default' ? '<button type="button" class="btn-secondary" data-action="alarm-notify">Bildirimleri aç</button>' : ''}
+          <button type="button" class="btn-ghost" data-action="alarm-test">Alarmı dene</button>
+        </div>
+      </div>`;
+  }
+
   function shareText() {
     const monday = weekStart(dayKey());
     const days = weekDays(monday);
@@ -172,7 +194,7 @@ export async function renderAyarlar(root) {
   function paint() {
     root.innerHTML = `
       <div class="greet"><h1>Ayarlar</h1></div>
-      ${installCardHtml()}${profileHtml()}${themeHtml()}${timesHtml()}${wallHtml()}${shareHtml()}${backupHtml()}${versionHtml()}${resetHtml()}
+      ${installCardHtml()}${profileHtml()}${themeHtml()}${timesHtml()}${alarmHtml()}${wallHtml()}${shareHtml()}${backupHtml()}${versionHtml()}${resetHtml()}
     `;
   }
 
@@ -210,6 +232,22 @@ export async function renderAyarlar(root) {
     });
     window.fenerToast && window.fenerToast('Kaydedildi.');
     paint();
+  });
+
+  on(root, 'change', '[data-action="toggle-alarm"]', async (e, t) => {
+    await store.update(d => { d.settings.alarm = t.checked; });
+    window.fenerToast && window.fenerToast(t.checked ? 'Alarm açık.' : 'Alarm kapalı.');
+  });
+
+  on(root, 'click', '[data-action="alarm-notify"]', async () => {
+    const res = await askNotificationPermission();
+    window.fenerToast && window.fenerToast(res === 'granted' ? 'Bildirimler açıldı.' : 'Bildirim izni verilmedi.');
+    paint();
+  });
+
+  on(root, 'click', '[data-action="alarm-test"]', () => {
+    startAlarm({ phase: 'focus' });
+    setTimeout(stopAlarm, 3000);
   });
 
   on(root, 'click', '[data-action="share-week"]', async () => {

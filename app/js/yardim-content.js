@@ -19,6 +19,13 @@ export const ENTRIES = [
     route: '#/bugun', label: 'Bugün ekranına git',
   },
   {
+    id: 'alarm',
+    title: 'Süre bitince alarm',
+    keywords: ['alarm', 'zil', 'ses', 'ses cal', 'ses gelmiyor', 'sure bitti', 'sure bitince', 'haber ver', 'titresim', 'sessiz', 'alarm kapat', 'alarm ac'],
+    answer: 'Odak ya da mola bitince alarm çalar, telefon titrer, uygulama arka plandaysa bildirim düşer. Ekrana dokununca susar. Ayarlar > "Süre alarmı"ndan açıp kapatabilir, "Alarmı dene" ile sesi deneyebilirsin. Telefon sessizdeyse ses gelmez. Uygulama tamamen kapalıysa alarm çalamaz; sayacı çalıştırırken Fener\'i açık bırak.',
+    route: '#/ayarlar', label: 'Ayarlara git',
+  },
+  {
     id: 'sayac-baslat',
     title: 'Odak sayacını başlatma',
     keywords: ['sayac', 'baslat', 'zamanlayici', 'pomodoro', 'beher', 'odak', 'calismaya basla', 'kronometre', 'sure basla', 'tam ekran'],

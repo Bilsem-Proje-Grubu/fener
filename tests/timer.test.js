@@ -39,3 +39,30 @@ test('elapsedMinutes: en az 1 dakika sayar, erken bitirmede geçen süreyi verir
   assert.equal(elapsedMinutes(t, 10000), 1);
   assert.equal(elapsedMinutes(t, 12 * 60000), 12);
 });
+
+import { shouldRing, alarmText } from '../app/js/alarm.js';
+
+test('alarm: süre bitince bir kez çalar, ikinci kez çalmaz', () => {
+  const t = startFocus(0, 25);
+  assert.equal(shouldRing(t, 24 * 60000, null), false);
+  assert.equal(shouldRing(t, 25 * 60000 + 500, null), true);
+  assert.equal(shouldRing(t, 25 * 60000 + 1500, t.endsAt), false);
+});
+
+test('alarm: +5 dakika sonrası yeni bitişte tekrar çalar', () => {
+  const t = startFocus(0, 25);
+  const t2 = extend(t, 5);
+  assert.equal(shouldRing(t2, 30 * 60000 + 100, t.endsAt), true);
+});
+
+test('alarm: kapalıyken, duraklatılmışken ve çok eskiyken çalmaz', () => {
+  const t = startFocus(0, 25);
+  assert.equal(shouldRing(t, 25 * 60000 + 100, null, false), false);
+  assert.equal(shouldRing({ ...t, pausedAt: 1000 }, 25 * 60000 + 100, null), false);
+  assert.equal(shouldRing(t, 25 * 60000 + 10 * 60000, null), false);
+  assert.equal(shouldRing(null, 1, null), false);
+});
+
+test('alarm: metin odak ve mola için farklı', () => {
+  assert.notEqual(alarmText({ phase: 'focus' }).title, alarmText({ phase: 'break' }).title);
+});
